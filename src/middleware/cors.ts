@@ -1,4 +1,4 @@
-import cors, { CorsOptions,  } from 'cors';
+import cors, { CorsOptions } from 'cors';
 import { CORS_ORIGIN } from '../config/variables'
 
 type IHandleOrigin = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void ) => void

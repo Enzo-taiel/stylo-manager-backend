@@ -1,12 +1,10 @@
-import Express, { Application } from 'express';
-
+import Express, { Application, json } from 'express';
+import Helmet from 'helmet'
 // CONFIGS
 import { PORT } from './config/variables'
-
 // MIDDLEWARE
 import Cors from './middleware/cors';
 import Morgan from './middleware/morgan';
-
 // ROUTER
 import { routerAuth } from './routes/index.routes'
 
@@ -20,19 +18,24 @@ export class Server {
     this.PORT = PORT
   }
 
-  middleware() {
-    this.APP.use(Morgan)
+  private middleware() {
     this.APP.use(Cors)
+    this.APP.use(Morgan)
+    this.APP.use(json())
+    this.APP.use(Helmet())
   }
 
-  routes() {
+  private routes() {
     this.APP.use("/api/auth", routerAuth)
   }
 
-  start_server() {
-    this.APP.listen(this.PORT, ()=> {
-      console.log(`Listen server on port ${this.PORT}`)
+  public start_server() {
+    this.middleware()
+    this.routes()
+    this.APP.listen(this.PORT, () => {
+      console.log(`Listen server on port ${this.PORT}.`)
     })
+
   }
 
 }

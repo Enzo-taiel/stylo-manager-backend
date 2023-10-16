@@ -12,7 +12,7 @@ const user_1 = require("./consults/user");
 // pg-promise initialization options:
 const options = {
     extend(obj) {
-        obj.findUser = user_1.findUser;
+        obj.signinUser = user_1.signinUser;
     },
 };
 let db;
@@ -22,5 +22,5 @@ try {
     console.log("conexion postgreSQL exitosa.");
 }
 catch (error) {
-    console.log(error);
+    console.log({});
 }

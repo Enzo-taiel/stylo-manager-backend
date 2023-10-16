@@ -1,14 +1,8 @@
 // Server
 import { Server } from './main';
+import "./database/connect";
+import { config } from "dotenv";
 
-// DATABASE CONNECTION
-// import './database/NSQL/connectNSQL'
-import './database/SQL/connectSQL'
-
-require('dotenv').config();
-
-const srv = new Server()
-
-srv.start_server()
-srv.middleware()
-srv.routes()
+config();
+const server = new Server();
+server.start_server();

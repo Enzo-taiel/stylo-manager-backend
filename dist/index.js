@@ -2,11 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Server
 const main_1 = require("./main");
-// DATABASE CONNECTION
-// import './database/NSQL/connectNSQL'
-require("./database/SQL/connectSQL");
-require('dotenv').config();
-const srv = new main_1.Server();
-srv.start_server();
-srv.middleware();
-srv.routes();
+require("./database/connect");
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+const server = new main_1.Server();
+server.start_server();
