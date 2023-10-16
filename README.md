@@ -45,3 +45,13 @@ Asegúrate de tener instalado lo siguiente:
   ```bash
    npm run dev:server
   ```
+
+# Contribución
+
+- Si deseas contribuir a este proyecto, sigue estos pasos:
+
+- Haz un fork del proyecto.
+- Crea una nueva rama: git checkout -b mi-caracteristica.
+- Realiza tus cambios y haz commits: git commit -m 'Añadir nueva característica'.
+- Sube tus cambios: git push origin mi-caracteristica.
+- Crea una solicitud de extracción en GitHub.
