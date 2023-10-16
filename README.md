@@ -23,21 +23,21 @@ Asegúrate de tener instalado lo siguiente:
 1. Clona este repositorio:
 
   ```bash
-   git clone https://github.com/tu-usuario/tu-repo.git```
+   git clone https://github.com/tu-usuario/tu-repo.git;
 
 2. Navega al directorio del proyecto:
 
   ```bash
-   cd SERVER_API_REST
+   cd SERVER_API_REST;
 
 3. Instala las dependencias:
 
   ```bash
-   npm install
+   npm install;
 
 # Uso
  
 - Para ejecutar el servidor en modo de desarrollo:
  
   ```bash
-   npm run dev:server ```
+   npm run dev:server;
