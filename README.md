@@ -22,10 +22,10 @@ Asegúrate de tener instalado lo siguiente:
 
 1. Clona este repositorio:
 
-   ```bash
-   git clone https://github.com/tu-usuario/tu-repo.git
+  ```bash
+   git clone https://github.com/tu-usuario/tu-repo.git```
 
-2. Navega al directorio del proyecto: 
+2. Navega al directorio del proyecto:
 
   ```bash
    cd SERVER_API_REST
