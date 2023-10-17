@@ -23,7 +23,7 @@ Asegúrate de tener instalado lo siguiente:
 1. Clona este repositorio:
 
   ```bash
-   git clone https://github.com/tu-usuario/tu-repo.git
+   git clone https://github.com/Enzo-taiel/server_API_REST.git
   ```
 
 2. Navega al directorio del proyecto:
