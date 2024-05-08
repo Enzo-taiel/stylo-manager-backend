@@ -1,9 +1,14 @@
 import { Router } from 'express'
 // CONTROLLERS
-import { SigninController, SignupController } from '../controllers/auth.controller'
+import { SigninController, SignupController, GetUserDataController } from '../controllers/auth'
+// MIDDLEWARE
+import SigninValidateFieldsMiddleware from '../middleware/auth/signinMiddleware'
+import SignupValidateFieldsMiddleware from '../middleware/auth/singupMiddleware'
+import HandleAuthorizationDashboard from '../middleware/token'
 
 const routerAuth = Router()
-routerAuth.post("/signin", SigninController)
-routerAuth.post("/signup", SignupController)
+routerAuth.post("/signin", SigninValidateFieldsMiddleware, SigninController)
+routerAuth.post("/signup", SignupValidateFieldsMiddleware, SignupController)
+routerAuth.get("/user", HandleAuthorizationDashboard, GetUserDataController)
 
 export default routerAuth

@@ -2,15 +2,18 @@ import { Schema } from 'mongoose'
 import * as JWTOKEN from 'jsonwebtoken'
 import bcrypt from "bcrypt";
 
-import { JWT } from '../config/variables'
+import { SECRET_KEY_JWT } from '../config/variables'
 
 export const createToken = (_id: Schema.Types.ObjectId): string => {
-  const token = JWTOKEN.sign({ _id }, JWT.SECRET_KEY)
+  const token = JWTOKEN.sign({ _id }, SECRET_KEY_JWT)
   return token
 }
 
-export const decodingToken = (token: string): string | JWTOKEN.JwtPayload => {
-  const payload = JWTOKEN.verify(token, JWT.SECRET_KEY)
+export const decodingToken = (token: string): JWTOKEN.JwtPayload => {
+  const payload = JWTOKEN.verify(token, SECRET_KEY_JWT)
+  if (typeof payload === 'string') {
+    throw new Error('Invalid token');
+  }
   return payload
 }
 

@@ -1,9 +1,9 @@
 import cors, { CorsOptions } from 'cors';
 import { CORS_ORIGIN } from '../config/variables'
 
-type IHandleOrigin = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void ) => void
+type IHandleOrigin = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => void
 
-const allowedOrigins = [CORS_ORIGIN]
+const allowedOrigins = [CORS_ORIGIN, 'http://localhost:5173']
 
 const HandleOrigin: IHandleOrigin = (origin, cb) => {
   if (allowedOrigins.includes(origin || '')) {
@@ -14,12 +14,9 @@ const HandleOrigin: IHandleOrigin = (origin, cb) => {
 }
 
 const cors_options: CorsOptions = {
-  methods: ["GET", "POST", "HEAD"],
-  origin: HandleOrigin,
-  credentials: true,
+  methods: ["HEAD", "GET", "POST", "PUT", "REMOVE"],
+  origin: '*',
   optionsSuccessStatus: 204,
-  allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
-  exposedHeaders: 'Authorization',
   maxAge: 3600
 }
 

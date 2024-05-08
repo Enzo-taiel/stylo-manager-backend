@@ -1,4 +1,6 @@
 import { SchemaDefinition } from 'mongoose'
+// OTHERS SCHEMAS
+import { ClothesModel } from '../models/clothes.model'
 
 export const UserSchema: SchemaDefinition = {
   name: {
@@ -8,7 +10,6 @@ export const UserSchema: SchemaDefinition = {
   last_name: {
     type: String,
     required: true,
-    unique: true,
   },
   username: {
     type: String,
@@ -22,4 +23,8 @@ export const UserSchema: SchemaDefinition = {
     type: String,
     required: true,
   },
+  business: {
+    type: String,
+    required: true
+  }
 }

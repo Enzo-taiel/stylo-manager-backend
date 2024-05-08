@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt'
 // SCHEMAS
 import { UserSchema } from '../schemas'
@@ -18,6 +18,4 @@ User_Schema.pre<IUser>(
   }
 );
 
-const User = mongoose.model('users', User_Schema);
-
-export default User;
+export { User_Schema }

@@ -1,6 +1,5 @@
 // Server
 import { Server } from './main';
-import "./database/connect";
 import { config } from "dotenv";
 
 config();
