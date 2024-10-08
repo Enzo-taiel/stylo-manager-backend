@@ -1,6 +1,4 @@
 import { SchemaDefinition } from 'mongoose'
-// OTHERS SCHEMAS
-import { ClothesModel } from '../models/clothes.model'
 
 export const UserSchema: SchemaDefinition = {
   name: {
