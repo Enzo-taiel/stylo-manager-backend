@@ -7,4 +7,9 @@ export interface IEmployee extends Document {
   skills: String[]
   createdAt: Date
   updateAt: Date
+  info: {
+    city: string,
+    instagramUsername: string
+    day_available: string
+  }
 }

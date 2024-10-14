@@ -1,9 +1,11 @@
 import { Router } from 'express'
 // CONTROLLERS
-import { ObtainAllEmployeesController } from '../controllers/employees'
+import { ObtainAllServicesController, CreateServiceController } from '../controllers/services'
+import ServicesValidateFieldsMiddleware from '../middleware/services/createServiceMiddleware'
 
 const routerServices = Router()
 
-routerServices.get("/all", ObtainAllEmployeesController)
+routerServices.get("/all", ObtainAllServicesController)
+routerServices.post("/create", ServicesValidateFieldsMiddleware, CreateServiceController)
 
 export default routerServices

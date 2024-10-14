@@ -1,4 +1,4 @@
-import { SchemaDefinition } from 'mongoose'
+import mongoose, { SchemaDefinition } from 'mongoose'
 
 export const ServicesSchema: SchemaDefinition = {
   title: {
@@ -18,5 +18,12 @@ export const ServicesSchema: SchemaDefinition = {
       require: true
     }
   ],
+  employees_vailable: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "employees",
+      required: true
+    }
+  ]
   
 }

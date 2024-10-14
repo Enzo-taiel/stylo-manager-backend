@@ -1,6 +1,6 @@
-import { SchemaDefinition } from 'mongoose'
+import mongoose, { SchemaDefinition } from 'mongoose'
 
-export const EmployeeSchema: SchemaDefinition = {
+export const EmployeesSchema: SchemaDefinition = {
   full_name: {
     type: String,
     required: true,
@@ -15,5 +15,22 @@ export const EmployeeSchema: SchemaDefinition = {
       require: true
     }
   ],
-  
+  appointments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "appointments",
+      required: true
+    }
+  ],
+  info: {
+    city: {
+      type: String
+    },
+    instagramUsername: {
+      type: String
+    },
+    day_available: {
+      type: String
+    }
+  }
 }

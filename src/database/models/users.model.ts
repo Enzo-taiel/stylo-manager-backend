@@ -5,9 +5,9 @@ import { UserSchema } from '../schemas'
 // INTERFACE DATABASE
 import { IUser } from '../interface'
 
-const User_Schema = new Schema(UserSchema, { timestamps: true });
+const Users_Schema = new Schema(UserSchema, { timestamps: true });
 
-User_Schema.pre<IUser>(
+Users_Schema.pre<IUser>(
   "save",
   async function (next: (err?: NativeError | null | undefined) => void) {
     if (!this?.isModified("password")) return next();
@@ -18,4 +18,4 @@ User_Schema.pre<IUser>(
   }
 );
 
-export { User_Schema }
+export { Users_Schema }

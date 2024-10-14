@@ -7,7 +7,7 @@ import { PORT } from './config/variables'
 import Cors from './middleware/cors';
 import Morgan from './middleware/morgan';
 // ROUTER
-import { routerAuth, routerEmployees } from './routes'
+import { routerAuth, routerEmployees, routerServices } from './routes'
 
 export class Server {
 
@@ -20,6 +20,7 @@ export class Server {
   }
 
   private middleware() {
+    this.APP.use(Cors)
     this.APP.use(Helmet())
     this.APP.use(compression())
     this.APP.use(json())
@@ -29,7 +30,7 @@ export class Server {
   private routes() {
     this.APP.use("/api/v1/auth", routerAuth)
     this.APP.use("/api/v1/employees", routerEmployees)
-    this.APP.use("/api/v1/services", routerEmployees)
+    this.APP.use("/api/v1/services", routerServices)
 
   }
 

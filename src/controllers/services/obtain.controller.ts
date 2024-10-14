@@ -5,10 +5,9 @@ import { IServices } from '../../database/interface'
 import { ServicesModel } from '../../database/models/index.models'
 
 export const ObtainAllServicesController = async (_req: Request, res: Response) => {
-
   try {
-    const Employees: IServices[] = await ServicesModel.find()
-    return res.status(200).json({ message: "Employees obtain successfully.", Employees })
+    const services: IServices[] = await ServicesModel.find().populate("employees_vailable")
+    return res.status(200).json({ message: "Services obtain successfully.", services })
   } catch (error) {
     console.error(error)
     return res.status(500).json({ message: "Error internal Server." })
