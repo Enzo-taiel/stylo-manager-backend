@@ -18,7 +18,7 @@ export const ServicesSchema: SchemaDefinition = {
       require: true
     }
   ],
-  employees_vailable: [
+  employees_available: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "employees",

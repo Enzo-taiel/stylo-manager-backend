@@ -9,6 +9,10 @@ export const EmployeesSchema: SchemaDefinition = {
     type: String,
     required: false,
   },
+  expoPushToken: {
+    type: String,
+    require: false
+  },
   skills: [
     {
       type: String,
@@ -19,7 +23,6 @@ export const EmployeesSchema: SchemaDefinition = {
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "appointments",
-      required: true
     }
   ],
   info: {
@@ -31,6 +34,10 @@ export const EmployeesSchema: SchemaDefinition = {
     },
     day_available: {
       type: String
-    }
+    },
+    hour_unavailable: {
+      type: String
+    },
   }
+
 }

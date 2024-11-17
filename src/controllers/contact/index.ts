@@ -1,0 +1,1 @@
+export { CreateMessageContactController } from "./message.controller"

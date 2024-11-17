@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 // SCHEMAS
-import { ServicesSchema } from '../schemas'
+import { ClientsSchema } from '../schemas'
 
-const Clients_Schema = new Schema(ServicesSchema, { timestamps: true });
+const Clients_Schema = new Schema(ClientsSchema, { timestamps: true });
 
 export { Clients_Schema }

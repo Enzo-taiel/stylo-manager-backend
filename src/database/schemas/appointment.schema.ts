@@ -6,9 +6,9 @@ export const AppointmentsSchema: SchemaDefinition = {
     ref: "services",
     required: true
   },
-  day: {
+  date: {
     type: String,
-    require: true
+    required: true
   },
   hour: {
     type: String,
@@ -23,5 +23,18 @@ export const AppointmentsSchema: SchemaDefinition = {
     type: mongoose.Schema.Types.ObjectId,
     ref: "clients",
     required: true
+  },
+  paymentStatus: {
+    type: String,
+    required: false,
+    default: "pending"
+  },
+  methodPayment: {
+    type: String,
+    required: true
+  },
+  paymentId: {
+    type: String,
+    required: false
   }
 }
