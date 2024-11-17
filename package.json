@@ -5,7 +5,8 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev:server": "tsc-watch --onSuccess \"node ./dist\" ",
-    "start": ""
+    "build": "tsc",
+    "start": "node ./dist/index.js"
   },
   "author": "enzo taiel navarro",
   "license": "ISC",
