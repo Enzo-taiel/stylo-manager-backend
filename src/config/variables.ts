@@ -1,4 +1,4 @@
-export const CORS_ORIGIN = process.env.SERVER_CLIENT || ["http://localhost:3000"]
+export const CORS_ORIGIN = process.env.CORS_ORIGINS?.split(',') || []
 export const PORT = Number(process.env.PORT) || 8080
 export const SECRET_KEY_JWT = process.env.SECRET_KEY_JWT || "SHHH"
 

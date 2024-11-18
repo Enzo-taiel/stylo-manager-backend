@@ -3,7 +3,7 @@ import { CORS_ORIGIN } from '../config/variables'
 
 type IHandleOrigin = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => void
 
-const allowedOrigins = [CORS_ORIGIN, 'http://localhost:5173', 'http://localhost:3000']
+const allowedOrigins = CORS_ORIGIN
 
 const HandleOrigin: IHandleOrigin = (origin, cb) => {
   if (allowedOrigins.includes(origin || '')) {
@@ -15,7 +15,7 @@ const HandleOrigin: IHandleOrigin = (origin, cb) => {
 
 const cors_options: CorsOptions = {
   methods: ["HEAD", "GET", "POST", "PUT", "REMOVE"],
-  origin: '*',
+  origin: HandleOrigin,
   optionsSuccessStatus: 204,
   maxAge: 3600
 }
