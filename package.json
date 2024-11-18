@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "server for application created with react-native",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
   "scripts": {
     "dev:server": "tsc-watch --onSuccess \"node ./dist\" ",
     "build": "tsc",
