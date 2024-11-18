@@ -38,6 +38,7 @@
     "@types/multer": "^1.4.11",
     "@types/spdy": "^3.4.6",
     "@types/web-push": "^3.6.4",
-    "tsc-watch": "^5.0.3"
+    "tsc-watch": "^5.0.3",
+    "typescript": "^5.0.0"
   }
 }
