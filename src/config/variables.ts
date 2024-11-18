@@ -1,4 +1,4 @@
-export const CORS_ORIGIN = process.env.CORS_ORIGINS?.split(',') || []
+export const CORS_ORIGIN = process.env.CORS_ORIGINS?.split(',') || ["http://localhost:8081", "http://192.168.1.46:8081", "exp://192.168.1.46:8081"]
 export const PORT = Number(process.env.PORT) || 8080
 export const SECRET_KEY_JWT = process.env.SECRET_KEY_JWT || "SHHH"
 

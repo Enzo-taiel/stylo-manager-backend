@@ -15,7 +15,7 @@ const HandleOrigin: IHandleOrigin = (origin, cb) => {
 
 const cors_options: CorsOptions = {
   methods: ["HEAD", "GET", "POST", "PUT", "REMOVE"],
-  origin: HandleOrigin,
+  origin: "*",
   optionsSuccessStatus: 204,
   maxAge: 3600
 }
