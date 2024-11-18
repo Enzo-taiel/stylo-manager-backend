@@ -11,22 +11,6 @@ const initializeSocket = (server: HttpServer) => {
       methods: ["GET", "POST", "PUT", "OPTION"]
     }
   });
-
-  console.log("socket.io !!")
-
-  io.on("connection", (socket) => {
-    console.log(`Cliente conectado: ${socket.id}`);
-
-    // Aquí puedes manejar eventos específicos de Socket.IO
-    socket.on("message", (data) => {
-      console.log("Mensaje recibido:", data);
-      socket.broadcast.emit("message", data);
-    });
-
-    socket.on("disconnect", () => {
-      console.log(`Cliente desconectado: ${socket.id}`);
-    });
-  });
 }
 
 export function getIO() {
