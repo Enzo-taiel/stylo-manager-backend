@@ -78,6 +78,7 @@ changeStreamAppointment.on("change", async (data) => {
 
     io.emit("delete-appointment", document._id)
 
+    console.log(clientData)
     await sendPushNotification(
       clientData!.expoPushToken,
       `Cancelacion de turno para ${clientData!.employeeName}!`,
