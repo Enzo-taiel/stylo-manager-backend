@@ -78,10 +78,9 @@ changeStreamAppointment.on("change", async (data) => {
 
     io.emit("delete-appointment", document._id)
 
-    console.log(clientData)
     await sendPushNotification(
       clientData!.expoPushToken,
-      `Cancelacion de turno para ${clientData!.employeeName}!`,
+      `Cancelacion de turno para ${clientData!.employeeName.split(" ")[0]}!`,
       `${clientData!.clientName.split(" ")[0]} acaba de cancelar la cita del dia ${formatDate(clientData!.date)} a las ${clientData!.hour} con ${clientData!.employeeName.split(" ")[0]}`)
   }
 
