@@ -12,7 +12,6 @@ export const CreateMessageContactController = async (req: Request, res: Response
 
   try {
     const message: any = await ContactModel.create(req.body)
-    console.log(message)
     // ANTES DE TERMINAR LA CONSULTA, AGREGAR LA LOGICA PARA RESPONDER EL MENSAJE MEDIANTE
     // WHATSAPP BUSSINES PARA PONERSE EN CONTACTO CON EL CLIENTE
     return res.status(200).json({ message: "message saved successfully.", success: true })
