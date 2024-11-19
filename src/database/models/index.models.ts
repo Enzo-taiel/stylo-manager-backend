@@ -82,7 +82,7 @@ changeStreamAppointment.on("change", async (data) => {
     await sendPushNotification(
       clientData!.expoPushToken,
       `Cancelacion de turno para ${clientData!.employeeName}!`,
-      `${clientData!.clientName} acaba de cancelar la cita del dia ${formatDate(clientData!.date)} a las ${clientData!.hour} con ${clientData!.employeeName}`)
+      `${clientData!.clientName.split(" ")[0]} acaba de cancelar la cita del dia ${formatDate(clientData!.date)} a las ${clientData!.hour} con ${clientData!.employeeName.split(" ")[0]}`)
   }
 
   if (data.operationType === "update") {
