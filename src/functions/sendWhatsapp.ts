@@ -106,6 +106,7 @@ export const sendWspCancelAppointmentSuccessfully = async ({ phone, clientName, 
     console.log(response)
     return { data: response }
   } catch (error) {
-    console.log(error)
+    console.log("error al enviar whatsapp.")
+    return { error }
   }
 }

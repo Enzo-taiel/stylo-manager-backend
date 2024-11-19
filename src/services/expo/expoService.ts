@@ -10,21 +10,19 @@ export const sendPushNotification = async (token: string, title: string, body: s
     return;
   }
 
-  const messages = [
-    {
-      to: token,
-      sound: {
-        critical: true,
-        volume: 1
-      },
-      title,
-      body,
-      data,
-    },
-  ];
-
   try {
-    const ticketChunk = await expo.sendPushNotificationsAsync(messages);
+    const ticketChunk = await expo.sendPushNotificationsAsync([
+      {
+        to: token,
+        sound: {
+          critical: true,
+          volume: 1
+        },
+        title,
+        body,
+        data,
+      }
+    ]);
     console.log('Ticket chunk:', ticketChunk);
     return ticketChunk;
   } catch (error) {
