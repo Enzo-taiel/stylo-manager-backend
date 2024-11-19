@@ -20,8 +20,7 @@ export const CreatePushNotificationController = async (req: Request, res: Respon
       },
       JSON.stringify({
         title: '⏰ Recordatorio de tu reserva',
-        body: `👋 ¡Hola ${client!.full_name.split(" ")[0]}!
-         Tu reserva está cerca. ¡Te esperamos pronto en Club Stylo! ✨`,
+        body: `👋 ¡Hola ${client!.full_name.split(" ")[0]}!, \n Tu reserva está cerca. ¡Te esperamos pronto en Club Stylo! ✨`,
       })
     )
 
