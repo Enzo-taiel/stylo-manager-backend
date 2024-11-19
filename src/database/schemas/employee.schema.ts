@@ -11,12 +11,12 @@ export const EmployeesSchema: SchemaDefinition = {
   },
   expoPushToken: {
     type: String,
-    require: false
+    required: false
   },
   skills: [
     {
       type: String,
-      require: true
+      required: true
     }
   ],
   appointments: [
