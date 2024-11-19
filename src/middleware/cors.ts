@@ -6,18 +6,16 @@ type IHandleOrigin = (origin: string | undefined, callback: (err: Error | null, 
 const allowedOrigins = CORS_ORIGIN
 
 const HandleOrigin: IHandleOrigin = (origin, cb) => {
-  console.log({ origin })
-  return cb(null, true);
-  // if (allowedOrigins.includes(origin || '')) {
-  //   cb(null, true);
-  // } else {
-  //   cb(new Error('Acceso no autorizado'), false);
-  // }
+  if (allowedOrigins.includes(origin || '')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Acceso no autorizado'), false);
+  }
 }
 
 const cors_options: CorsOptions = {
   methods: ["HEAD", "GET", "POST", "PUT", "REMOVE"],
-  origin: HandleOrigin,
+  origin: "*",
   optionsSuccessStatus: 204,
   maxAge: 3600
 }
