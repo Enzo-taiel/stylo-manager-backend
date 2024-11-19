@@ -32,7 +32,7 @@ export const ObtainEmployeeByIdController = async (req: Request, res: Response) 
           },
           {
             path: "client",
-            select: "full_name",
+            select: "full_name subscription",
           }
         ],
       })
