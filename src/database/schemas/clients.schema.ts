@@ -13,6 +13,10 @@ export const ClientsSchema: SchemaDefinition = {
     type: String,
     required: false,
   },
+  sessionId: {
+    type: String,
+    required: true
+  },
   subscription: {
     endpoint: {
       type: String,

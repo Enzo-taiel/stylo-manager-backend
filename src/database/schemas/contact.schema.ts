@@ -7,10 +7,18 @@ export const ContactSchema: SchemaDefinition = {
   },
   phone: {
     type: String,
-    require: true
+    require: true,
+    unique: true,
   },
-  message: {
+  messages: [
+    {
+      text: { type: String, required: true }, // Contenido del mensaje
+      read: { type: Boolean, default: false }, // Indicador de si está leído o no
+      createdAt: { type: Date, default: Date.now }, // Fecha de envío del mensaje
+    },
+  ],
+  sessionId: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 }
