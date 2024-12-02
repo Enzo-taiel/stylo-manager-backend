@@ -1,19 +1,23 @@
 // Server
-import { Server } from './main';
 import { config } from "dotenv";
-import { connectDB } from './database/connect'
-import WebPush from 'web-push'
+import WebPush from "web-push";
+import { Server } from "./main";
+import { connectDB } from "./database/connect";
+import { WEB_PUSH } from "./config/variables";
 
-// Variables
-import { WEB_PUSH } from './config/variables'
+// Configurar dotenv para cargar las variables de entorno
+config();
 
+// Configuración de WebPush
 WebPush.setVapidDetails(
-  'mailto:enzotaiel118@gmail.com',
+  `mailto:${WEB_PUSH.VAPID_EMAIL}`,
   WEB_PUSH.VAPID_PUBLIC_KEY,
   WEB_PUSH.VAPID_PRIVATE_KEY
 );
 
+// Conectar a la base de datos
 connectDB();
-config();
+
+// Iniciar el servidor
 const server = new Server();
 server.startServer();

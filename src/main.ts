@@ -53,7 +53,8 @@ export class Server {
     initializeSocket(this.httpServer);
 
     this.httpServer.listen(this.PORT, () => {
-      console.log(`Servidor escuchando en el puerto ${this.PORT}.`);
+      console.log(`Servidor escuchando en el puerto ${this.PORT}.`)
+      console.log(`El servidor se encuentra en: ${process.env.NODE_ENV!}.`);
     });
   }
 }

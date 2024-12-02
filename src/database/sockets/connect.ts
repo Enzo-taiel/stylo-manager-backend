@@ -11,6 +11,13 @@ const initializeSocket = (server: HttpServer) => {
       methods: ["GET", "POST", "PUT", "OPTION"]
     }
   });
+  
+  io.on("connection", (socket) => {
+    console.log("Nuevo cliente conectado con id:", socket.id);
+    socket.on("disconnect", () => {
+      console.log("Cliente desconectado con id:", socket.id);
+    });
+  });
 }
 
 export function getIO() {
