@@ -7,21 +7,20 @@ import { Appointments_Schema } from "./appointments.models";
 import { TempAppointments_Schema } from "./temp.appointment.model";
 import { Sales_Schema } from "./sales.model";
 
-import { Contact_Schema } from "./contact.models";
 import { getIO } from "../sockets/connect";
-import { SendWhatsappSavedAppointmentSuccessfully, sendWspCancelAppointmentSuccessfully } from "../../functions/sendWhatsapp";
-import { sendPushNotification } from "../../services/expo/expoService";
+import { Contact_Schema } from "./contact.models";
 import { formatDate } from "../../helpers/formatDate";
+import { sendPushNotification } from "../../services/expo/expoService";
+import { SendWhatsappSavedAppointmentSuccessfully, sendWspCancelAppointmentSuccessfully } from "../../functions/sendWhatsapp";
 
 export const UsersModel = mongoose.model("users", Users_Schema)
-export const EmployeesModel = mongoose.model("employees", Employees_Schema)
-export const ServicesModel = mongoose.model("services", Services_Schema)
+export const SalesModel = mongoose.model("sales", Sales_Schema)
 export const ClientsModel = mongoose.model("clients", Clients_Schema)
-export const AppointmentsModel = mongoose.model("appointments", Appointments_Schema)
 export const ContactModel = mongoose.model("contacts", Contact_Schema)
+export const ServicesModel = mongoose.model("services", Services_Schema)
+export const EmployeesModel = mongoose.model("employees", Employees_Schema)
+export const AppointmentsModel = mongoose.model("appointments", Appointments_Schema)
 export const TempAppointmentsModel = mongoose.model("tempAppointments", TempAppointments_Schema)
-export const SalesModel = mongoose.model("payments", Sales_Schema)
-
 
 const changeStreamAppointment = AppointmentsModel.watch()
 
@@ -34,7 +33,7 @@ changeStreamAppointment.on("change", async (data) => {
     const appointment = await AppointmentsModel.findById(document._id)
       .populate({
         path: "client",
-        select: "phone full_name",
+        select: "phone full_name subscription",
       })
       .populate({
         path: "employee",
