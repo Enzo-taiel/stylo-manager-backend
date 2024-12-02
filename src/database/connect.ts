@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
 //  VARIABLES
-import { DATABSE_NSQL } from '../config/variables'
+import { DATABASE_NSQL } from '../config/variables'
 
 export const connectDB = async () => {
+
   try {
-    await mongoose.connect(DATABSE_NSQL.DATABASE_NSQL_URI + 'stylo-manager')
+    await mongoose.connect(String(DATABASE_NSQL.DATABASE_NSQL_URI + DATABASE_NSQL.DATABASE_NSQL_DB))
     console.log("Connexion con Mongodb exitosa !")
   } catch (error) {
     console.error('Error al conectar a MongoDB:', error);
