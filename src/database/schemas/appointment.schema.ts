@@ -36,5 +36,9 @@ export const AppointmentsSchema: SchemaDefinition = {
   paymentId: {
     type: String,
     required: false
+  },
+  sessionId: {
+    type: String,
+    required: true
   }
 }
