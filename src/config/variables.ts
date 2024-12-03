@@ -11,7 +11,7 @@ export const WHATSAPP_ENV = {
 
 export const DATABASE_NSQL = {
   DATABASE_NSQL_URI: isDevelopment ? "mongodb+srv://enzonavarro28:42092289@cluster0.gnc2omx.mongodb.net/" : process.env.MONDOGB_URI!,
-  DATABASE_NSQL_DB: isDevelopment ? "test" : process.env.DATABASE_DB!
+  DATABASE_NSQL_DB: isDevelopment ? "test" : process.env.MONGODB_DB!
 }
 
 export const WEB_PUSH = {
