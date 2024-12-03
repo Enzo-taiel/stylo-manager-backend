@@ -10,10 +10,8 @@ export const WHATSAPP_ENV = {
 }
 
 export const DATABASE_NSQL = {
-  DATABASE_NSQL_URI: isDevelopment ? "mongodb+srv://enzonavarro28:42092289@cluster0.gnc2omx.mongodb.net/" : process.env.MONDOGB_URI_PRODUCTION!,
-  DATABASE_NSQL_DB: isDevelopment ? "test" : process.env.DATABASE_NSQL_DB_PRODUCTION!,
-  DATABASE_NSQL_USER: isDevelopment ? "guest" : process.env.DATABASE_NSQL_USER_PRODUCTION!,
-  DATABASE_NSQL_PASS: isDevelopment ? "guest" : process.env.DATABASE_NSQL_USER_PRODUCTION!,
+  DATABASE_NSQL_URI: isDevelopment ? "mongodb+srv://enzonavarro28:42092289@cluster0.gnc2omx.mongodb.net/" : process.env.MONDOGB_URI!,
+  DATABASE_NSQL_DB: isDevelopment ? "test" : process.env.DATABASE_DB!
 }
 
 export const WEB_PUSH = {
