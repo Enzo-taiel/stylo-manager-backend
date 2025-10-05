@@ -9,6 +9,10 @@ export const ServicesSchema: SchemaDefinition = {
     type: String,
     required: true,
   },
+  subtitle: {
+    type: String,
+    required: true,
+  },
   price_kids: {
     type: String,
   },
