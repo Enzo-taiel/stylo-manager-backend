@@ -3,26 +3,34 @@ import mongoose, { SchemaDefinition } from 'mongoose'
 export const EmployeesSchema: SchemaDefinition = {
   full_name: {
     type: String,
-    required: true,
+    require: true,
   },
   avatar_url: {
     type: String,
-    required: false,
-  },
-  expoPushToken: {
-    type: String,
-    required: false
+    require: false,
   },
   skills: [
     {
       type: String,
-      required: true
+      require: true
     }
   ],
   appointments: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "appointments",
+    }
+  ],
+  days_unavailable: [
+    {
+      type: String,
+      require: true
+    }
+  ],
+  hours_unavailable: [
+    {
+      type: String,
+      require: true
     }
   ],
   info: {
@@ -32,12 +40,18 @@ export const EmployeesSchema: SchemaDefinition = {
     instagramUsername: {
       type: String
     },
-    day_available: {
-      type: String
+    days_available: {
+      type: String,
+      require: true
     },
-    hour_unavailable: {
+    hours_available: {
+      type: String,
+      require: true
+    }
+  },
+  jobs: [
+    {
       type: String
-    },
-  }
-
+    }
+  ]
 }
