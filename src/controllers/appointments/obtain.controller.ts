@@ -1,6 +1,6 @@
-import { Request, Response } from 'express'
-import { AppointmentsModel } from '../../database/models/index.models'
-import { IAppointment } from '../../database/interface/appointments.interface'
+import { Request, Response } from 'express';
+import { AppointmentsModel } from '../../database/models/index.models';
+import { IAppointment } from '../../database/interface/appointments.interface';
 
 export const getAllAppointments = async (_req: Request, res: Response) => {
   try {
@@ -8,7 +8,7 @@ export const getAllAppointments = async (_req: Request, res: Response) => {
       .populate("service")
       .populate("employee")
       .populate("client")
-      
+
     return res.status(200).json({ message: "Appointments obtain successfully.", appointments })
   } catch (error) {
     console.error(error)
