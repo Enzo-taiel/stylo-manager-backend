@@ -1,11 +1,8 @@
-// custom.d.ts
 
 import { Request } from 'express';
-import { connection } from 'mongoose'
+import { connection, Types } from 'mongoose';
+import { IUser } from '../database/interface';
 
-import { IUser } from '../database/interface'
-
-// Extiende la interfaz Request de Express
 declare module 'express-serve-static-core' {
   interface Request {
     businessName: string | null;
@@ -13,5 +10,6 @@ declare module 'express-serve-static-core' {
     dbAdmin: connection;
     userAdmin: IUser | null;
     passwordEncripted: string | null
+    sessionId: string
   }
 }
