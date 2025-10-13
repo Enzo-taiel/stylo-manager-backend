@@ -1,7 +1,7 @@
 import { SchemaDefinition } from 'mongoose'
 
 export const ClientsSchema: SchemaDefinition = {
-  full_name: {
+  name: {
     type: String,
     required: true,
   },
