@@ -1,9 +1,6 @@
-import { Request, Response } from 'express'
-import { validationResult } from 'express-validator'
-// INTERFACE DATABASE
-import { IEmployee } from '../../database/interface'
-// DATABASE
-import { ServicesModel } from '../../database/models/index.models'
+import { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
+import { ServicesModel } from '../../database/models/index.models';
 
 export const CreateServiceController = async (req: Request, res: Response) => {
 
@@ -11,7 +8,7 @@ export const CreateServiceController = async (req: Request, res: Response) => {
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array()[0] });
 
   try {
-    const service: any = await ServicesModel.create(req.body)
+    const service = await ServicesModel.create(req.body)
     return res.status(200).json({ message: "Service created successfully.", service })
   } catch (error) {
     console.error(error)
