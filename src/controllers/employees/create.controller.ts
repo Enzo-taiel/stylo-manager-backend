@@ -1,9 +1,6 @@
-import { Request, Response } from 'express'
-import { validationResult } from 'express-validator'
-// INTERFACE DATABASE
-import { IEmployee } from '../../database/interface'
-// DATABASE
-import { EmployeesModel } from '../../database/models/index.models'
+import { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
+import { EmployeesModel } from '../../database/models/index.models';
 
 export const CreateEmployeeController = async (req: Request, res: Response) => {
 
@@ -11,7 +8,7 @@ export const CreateEmployeeController = async (req: Request, res: Response) => {
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array()[0] });
 
   try {
-    const employee: any = await EmployeesModel.create(req.body)
+    const employee = await EmployeesModel.create(req.body)
     return res.status(200).json({ message: "Employee create successfully.", employee })
   } catch (error) {
     console.error(error)
