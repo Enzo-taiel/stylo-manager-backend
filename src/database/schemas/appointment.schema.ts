@@ -6,6 +6,11 @@ export const AppointmentsSchema: SchemaDefinition = {
     ref: "services",
     required: true
   },
+  employee: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "employees",
+    required: true
+  },
   date: {
     type: String,
     required: true
@@ -14,15 +19,10 @@ export const AppointmentsSchema: SchemaDefinition = {
     type: String,
     required: true,
   },
-  employee: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "employees",
-    required: true
-  },
   client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "clients",
-    required: true
+    required: false
   },
   paymentStatus: {
     type: String,
@@ -38,6 +38,14 @@ export const AppointmentsSchema: SchemaDefinition = {
     required: false
   },
   sessionId: {
+    type: String,
+    required: true
+  },
+  clientName: {
+    type: String,
+    required: true
+  },
+  clientPhone: {
     type: String,
     required: true
   }
