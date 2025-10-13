@@ -1,12 +1,10 @@
-import { Request, Response } from 'express'
-// INTERFACE DATABASE
-import { IEmployee } from '../../database/interface'
-// DATABASE
-import { EmployeesModel } from '../../database/models/index.models'
+import { Request, Response } from 'express';
+import { IEmployee } from '../../database/interface';
+import { EmployeesModel } from '../../database/models/index.models';
 
 export const ObtainAllEmployeesController = async (_req: Request, res: Response) => {
   try {
-    const employees: IEmployee[] = await EmployeesModel.find()
+    const employees = await EmployeesModel.find().populate("appointments")
     return res.status(200).json({ message: "Employees obtain successfully.", employees })
   } catch (error) {
     console.error(error)
