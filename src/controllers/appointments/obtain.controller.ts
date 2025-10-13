@@ -8,8 +8,8 @@ export const getAllAppointments = async (_req: Request, res: Response) => {
       .populate("service")
       .populate("employee")
       .populate("client")
-
-    return res.status(200).json({ message: "Appoitments obtain successfully.", appointments })
+      
+    return res.status(200).json({ message: "Appointments obtain successfully.", appointments })
   } catch (error) {
     console.error(error)
     return res.status(500).json({ message: "Error internal Server." })
@@ -38,4 +38,20 @@ export const getAppointementById = async (req: Request, res: Response) => {
     console.error(error)
     return res.status(500).json({ message: "Error internal Server." })
   }
+}
+
+export const getAppointmentBySessionId = async (req: Request, res: Response) => {
+
+  const sessionId = req.sessionId
+  try {
+    const appointments = await AppointmentsModel.find({ sessionId }).populate("service").populate("employee")
+    return res.status(200).json({
+      message: `Appointment by session obtain successfully`,
+      appointments
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ message: "Error internal Server." })
+  }
+
 }
