@@ -17,7 +17,8 @@ const cors_options: CorsOptions = {
   methods: ["HEAD", "GET", "POST", "PUT", "REMOVE"],
   origin: "*",
   optionsSuccessStatus: 204,
-  maxAge: 3600
+  maxAge: 3600,
+  credentials: true
 }
 
 const corsConfig = cors(cors_options)
