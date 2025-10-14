@@ -5,7 +5,7 @@ import validateFieldsInsertClient from '../middleware/clients/createClientMiddle
 
 const routerClients = Router()
 
-routerClients.get("/all", getClientController)
+routerClients.get("/obtain/all", getClientController)
 routerClients.post("/create", validateFieldsInsertClient, createClientController)
 
 export default routerClients
