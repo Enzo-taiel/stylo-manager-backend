@@ -35,13 +35,13 @@ export class Server {
 
   private routes() {
     this.APP.use("/api/v1/auth", routerAuth);
-    this.APP.use("/api/v1/sales", routerSales);
-    this.APP.use("/api/v1/clients", routerClients);
+    this.APP.use("/api/v1/sale", routerSales);
+    this.APP.use("/api/v1/client", routerClients);
     this.APP.use("/api/v1/contact", routerContacts);
-    this.APP.use("/api/v1/services", routerServices);
-    this.APP.use("/api/v1/employees", routerEmployees);
+    this.APP.use("/api/v1/service", routerServices);
+    this.APP.use("/api/v1/employee", routerEmployees);
     this.APP.use("/api/v1/webhook", routerExpoWebHooks);
-    this.APP.use("/api/v1/appointments", routerAppointments);
+    this.APP.use("/api/v1/appointment", routerAppointments);
     this.APP.use("/api/v1/notification", routerNotifications);
   }
 
