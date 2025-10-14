@@ -1,16 +1,24 @@
 import { Router } from 'express'
 // CONTROLLERS
 import {
-  getAllAppointments, getAppointementById,
-  getAppointmentBySessionId, createAppointment
+  getAllAppointmentsController, getAppointementByIdController,
+  getAppointmentBySessionController, createAppointmentController,
+  updateAppointmentByIdController
 } from '../controllers/appointments'
 // MIDDLEWARE
-import AppointmentValidateFieldsMiddleware from '../middleware/appointment/createAppointmentMiddleware'
+import CreateAppointmentValidateFieldsMiddleware from '../middleware/appointment/createAppointmentMiddleware'
+import UpdateAppointmentValidateFieldsMiddleware from '../middleware/appointment/updateAppointmentMiddleware'
 
 const routerAppointments = Router()
-routerAppointments.get("/all", getAllAppointments)
-routerAppointments.get("/session/all", getAppointmentBySessionId)
-routerAppointments.post("/create", createAppointment)
-routerAppointments.get("/:appointmentId", getAppointementById)
+routerAppointments.post("/create", CreateAppointmentValidateFieldsMiddleware, createAppointmentController)
+
+routerAppointments.get("/obtain/all", getAllAppointmentsController)
+routerAppointments.get("/obtain/session", getAppointmentBySessionController)
+routerAppointments.get("/obtain/:appointmentId", getAppointementByIdController)
+
+routerAppointments.put("/update/:appointmentId", UpdateAppointmentValidateFieldsMiddleware, updateAppointmentByIdController)
+
+routerAppointments.delete("/delete/:appointmentId")
+
 
 export default routerAppointments
