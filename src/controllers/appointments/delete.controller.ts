@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 
 export const deleteAppointmentByIdController = async (req: Request, res: Response) => {
   const appointmentId = req.params.appointmentId
+  const sessionTransaction = await mongoose.startSession()
+  sessionTransaction.startTransaction()
   try {
     const appointment = await AppointmentsModel.findById(appointmentId)
       .populate({ path: "client", select: "phone full_name" })
@@ -12,8 +14,7 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
       .populate({ path: "employee", select: "_id full_name expoPushToken" })
 
     if (!appointment) return res.status(204).json({ message: "No existe tal reservacion.", success: false })
-    const sessionTransaction = await mongoose.startSession()
-    sessionTransaction.startTransaction()
+
 
     await TempAppointmentsModel.create({
       employeeName: appointment.employee.full_name,
@@ -32,8 +33,11 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
 
     return res.status(200).json({ message: "Appointments delete successfully." })
   } catch (error) {
+    await sessionTransaction.abortTransaction()
     console.error(error)
     return res.status(500).json({ message: "Error internal Server." })
+  } finally {
+    sessionTransaction.endSession()
   }
 
   // try {
