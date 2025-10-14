@@ -10,7 +10,7 @@ export const WHATSAPP_ENV = {
 }
 
 export const DATABASE_NSQL = {
-  DATABASE_NSQL_URI: !isDevelopment ? process.env.MONDOGB_URI! : "mongodb+srv://enzotaiel118:42092289@cluster0.4agpn.mongodb.net/",
+  DATABASE_NSQL_URI: !isDevelopment ? process.env.MONGODB_URI! : "mongodb+srv://enzotaiel118:42092289@cluster0.4agpn.mongodb.net/",
   DATABASE_NSQL_DB: !isDevelopment ? process.env.MONGODB_DB! : "test"
 }
 

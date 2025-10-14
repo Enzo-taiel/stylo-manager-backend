@@ -1,7 +1,7 @@
 import mongoose, { SchemaDefinition } from 'mongoose'
 
 export const EmployeesSchema: SchemaDefinition = {
-  full_name: {
+  name: {
     type: String,
     require: true,
   },
