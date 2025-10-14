@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AppointmentsModel } from '../../database/models/index.models';
 import { IAppointment } from '../../database/interface/appointments.interface';
 
-export const getAllAppointments = async (_req: Request, res: Response) => {
+export const getAllAppointmentsController = async (_req: Request, res: Response) => {
   try {
     const appointments: IAppointment[] = await AppointmentsModel.find()
       .populate("service")
@@ -16,7 +16,7 @@ export const getAllAppointments = async (_req: Request, res: Response) => {
   }
 }
 
-export const getAppointementById = async (req: Request, res: Response) => {
+export const getAppointementByIdController = async (req: Request, res: Response) => {
 
   const appointmentId = req.params.appointmentId
 
@@ -40,15 +40,12 @@ export const getAppointementById = async (req: Request, res: Response) => {
   }
 }
 
-export const getAppointmentBySessionId = async (req: Request, res: Response) => {
+export const getAppointmentBySessionController = async (req: Request, res: Response) => {
 
   const sessionId = req.sessionId
   try {
     const appointments = await AppointmentsModel.find({ sessionId }).populate("service").populate("employee")
-    return res.status(200).json({
-      message: `Appointment by session obtain successfully`,
-      appointments
-    })
+    return res.status(200).json({ message: `Appointment by session obtain successfully`, appointments })
   } catch (error) {
     console.error(error)
     return res.status(500).json({ message: "Error internal Server." })
