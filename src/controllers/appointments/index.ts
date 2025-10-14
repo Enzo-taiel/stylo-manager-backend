@@ -1,2 +1,3 @@
-export { createAppointment } from "./create.controller"
-export { getAllAppointments, getAppointementById, getAppointmentBySessionId } from "./obtain.controller"
+export { createAppointmentController } from "./create.controller";
+export { updateAppointmentByIdController } from "./update.controller";
+export { getAllAppointmentsController, getAppointementByIdController, getAppointmentBySessionController } from "./obtain.controller";
