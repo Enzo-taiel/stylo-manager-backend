@@ -15,8 +15,8 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
     if (!appointment) return res.status(204).json({ message: "Not appointment exist.", success: false, error: false})
 
     await TempAppointmentsModel.create({
-      employeeName: appointment.employee.full_name,
-      clientName: appointment.client.full_name,
+      employeeName: appointment.employee.name,
+      clientName: appointment.client.name,
       phoneClient: appointment.client.phone,
       appointmentId: appointment._id,
       expoPushToken: appointment.employee.expoPushToken,
@@ -26,9 +26,7 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
 
     await EmployeesModel.findByIdAndUpdate(appointment.employee._id, { $pull: { appointments: appointment._id } }, { new: true })
     await appointment.deleteOne()
-
     await sessionTransaction.commitTransaction()
-
     return res.status(200).json({ message: "Appointments delete successfully.", success: true, error: false })
   } catch (error) {
     await sessionTransaction.abortTransaction()
@@ -37,17 +35,4 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
   } finally {
     sessionTransaction.endSession()
   }
-
-  // try {
-
-
-  //   await appointment.deleteOne()
-  //   await EmployeesModel.findByIdAndUpdate(employeeId, { $pull: { appointments: reservationId } }, { new: true })
-
-  //   return { success: true }
-  // } catch (error) {
-  //   console.log(error)
-  //   return { error: true }
-  // }
-
 }
