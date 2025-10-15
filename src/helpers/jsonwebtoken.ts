@@ -1,10 +1,9 @@
-import { Schema } from 'mongoose'
-import * as JWTOKEN from 'jsonwebtoken'
 import bcrypt from "bcrypt";
+import { Types } from 'mongoose'
+import * as JWTOKEN from 'jsonwebtoken'
+import { SECRET_KEY_JWT } from "../config/variables";
 
-import { SECRET_KEY_JWT } from '../config/variables'
-
-export const createToken = (_id: Schema.Types.ObjectId): string => {
+export const createToken = (_id: Types.ObjectId): string => {
   const token = JWTOKEN.sign({ _id }, SECRET_KEY_JWT)
   return token
 }

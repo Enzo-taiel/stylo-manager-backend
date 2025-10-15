@@ -1,14 +1,11 @@
-import { Request, Response } from 'express'
-import WebPush from 'web-push'
-import { ClientsModel } from '../../database/models/index.models'
+import WebPush from "web-push";
+import { Request, Response } from "express";
+import { ClientsModel } from "../../database/models/index.models";
 
 export const CreatePushNotificationController = async (req: Request, res: Response) => {
-
-  const { phone }: { phone: string } = req.body
-
+  const { phone } = req.body
   try {
-
-    const client = await ClientsModel.findOne({ phone }).lean()
+    const client = await ClientsModel.findOne({ phone })
     const subscription = client!.subscription
     await WebPush.sendNotification(
       {
@@ -24,9 +21,9 @@ export const CreatePushNotificationController = async (req: Request, res: Respon
       })
     )
 
-    return res.status(200).json({ message: "Notification send successfully." })
+    return res.status(200).json({ message: "Notification send successfully.", error: false, succes: true })
   } catch (error) {
     console.error(error)
-    return res.status(500).json({ message: "Error internal Server." })
+    return res.status(500).json({ message: "Error internal Server.", error: true, success: false })
   }
 }

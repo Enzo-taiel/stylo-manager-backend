@@ -1,12 +1,12 @@
-import { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
-import { AppointmentsModel, EmployeesModel } from '../../database/models/index.models';
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import { AppointmentsModel, EmployeesModel } from "../../database/models/index.models";
 
 export const createAppointmentController = async (req: Request, res: Response) => {
 
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array()[0] });
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array()[0], error: true, success: false, message: "error in key value" });
 
   const sessionId = req.sessionId
   const { serviceId, employeeId, clientName, clientPhone, date, hour, methodPayment } = req.body

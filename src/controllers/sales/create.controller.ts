@@ -1,6 +1,5 @@
-import { Request, Response } from 'express'
-// DATABASE
-import { SalesModel } from '../../database/models/index.models'
+import { Request, Response } from "express";
+import { SalesModel } from "../../database/models/index.models";
 
 export const CreateSalesController = async (req: Request, res: Response) => {
   try {
@@ -8,9 +7,9 @@ export const CreateSalesController = async (req: Request, res: Response) => {
     const sale = await SalesModel.findById(newSale._id)
     .populate("employee", "full_name")
     .populate("service", "title price")
-    return res.status(200).json({ message: "Sale saved successfully.", success: true, sale })
+    return res.status(200).json({ message: "Sale saved successfully.", success: true, sale, error: false })
   } catch (error) {
     console.error(error)
-    return res.status(500).json({ message: "Error internal Server." })
+    return res.status(500).json({ message: "Error internal Server.", error: true, success: false })
   }
 }
