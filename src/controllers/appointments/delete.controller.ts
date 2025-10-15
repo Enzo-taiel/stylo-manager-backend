@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { Request, Response } from "express";
-import { deleteOneAppointment } from "./delete";
 import { AppointmentsModel, EmployeesModel, TempAppointmentsModel } from "../../database/models/index.models";
 
 export const deleteAppointmentByIdController = async (req: Request, res: Response) => {
@@ -26,7 +25,7 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
     })
 
     await EmployeesModel.findByIdAndUpdate(appointment.employee._id, { $pull: { appointments: appointment._id } }, { new: true })
-    await deleteOneAppointment(appointment._id)
+    await appointment.deleteOne()
 
     await sessionTransaction.commitTransaction()
 
