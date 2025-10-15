@@ -5,7 +5,7 @@ import ServicesValidateFieldsMiddleware from '../middleware/services/createServi
 
 const routerServices = Router()
 
-routerServices.get("/all", ObtainAllServicesController)
+routerServices.get("/obtain/all", ObtainAllServicesController)
 routerServices.get("/top-services/:employeeId", ObtanTopServicesByEmployee)
 
 routerServices.post("/create", ServicesValidateFieldsMiddleware, CreateServiceController)
