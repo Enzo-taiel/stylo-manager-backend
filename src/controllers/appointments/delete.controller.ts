@@ -17,7 +17,7 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
     await TempAppointmentsModel.create({
       employeeName: appointment.employee.name,
       clientName: appointment.clientName,
-      phoneClient: appointment.client.phone,
+      phoneClient: appointment.clientPhone,
       appointmentId: appointment._id,
       expoPushToken: appointment.employee.expoPushToken,
       date: appointment.date,
