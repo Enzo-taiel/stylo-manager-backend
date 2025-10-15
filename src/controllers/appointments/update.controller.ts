@@ -31,7 +31,7 @@ export const updateAppointmentByIdController = async (req: Request, res: Respons
       )
     }
     await sessionTransaction.commitTransaction()
-    return res.status(200).json({ message: "Appointments update successfully.", appointment: newAppointment, suscess: true, error: false })
+    return res.status(200).json({ message: "Appointments update successfully.", appointment: newAppointment, success: true, error: false })
   } catch (error) {
     await sessionTransaction.abortTransaction()
     console.error(error)
