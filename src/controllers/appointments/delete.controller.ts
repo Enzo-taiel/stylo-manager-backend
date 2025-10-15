@@ -8,9 +8,9 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
   sessionTransaction.startTransaction()
   try {
     const appointment = await AppointmentsModel.findById(appointmentId)
-      .populate({ path: "client", select: "phone full_name" })
+      .populate({ path: "client", select: "phone name" })
       .populate({ path: "service", select: "title" })
-      .populate({ path: "employee", select: "_id full_name expoPushToken" })
+      .populate({ path: "employee", select: "_id name expoPushToken" })
 
     if (!appointment) return res.status(204).json({ message: "Not appointment exist.", success: false, error: false})
 
@@ -27,7 +27,7 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
     await EmployeesModel.findByIdAndUpdate(appointment.employee._id, { $pull: { appointments: appointment._id } }, { new: true })
     await appointment.deleteOne()
     await sessionTransaction.commitTransaction()
-    return res.status(200).json({ message: "Appointments delete successfully.", success: true, error: false })
+    return res.status(200).json({ message: "Appointment delete successfully.", success: true, error: false })
   } catch (error) {
     await sessionTransaction.abortTransaction()
     console.error(error)
