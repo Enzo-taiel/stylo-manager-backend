@@ -1,12 +1,11 @@
-import { Router } from 'express'
-// CONTROLLERS
-import { CreateMessageContactController, getAllMessages, getAllMessageByPhone } from '../controllers/contact'
-import ContactMessageValidateFieldsMiddleware from '../middleware/contact/createMessageContactMiddleware'
+import { Router } from "express";
+import ContactMessageValidateFieldsMiddleware from "../middleware/contact/createMessageContactMiddleware";
+import { CreateMessageContactController, getAllMessages, getAllMessageByPhone } from "../controllers/contact";
 
 const routerContact = Router()
 
-routerContact.get("/all", getAllMessages)
-routerContact.get("/message/:phone", getAllMessageByPhone)
-routerContact.post("/message", ContactMessageValidateFieldsMiddleware, CreateMessageContactController)
+routerContact.get("/obtain/all", getAllMessages)
+routerContact.get("/obtain/message/:phone", getAllMessageByPhone)
+routerContact.post("/message/create", ContactMessageValidateFieldsMiddleware, CreateMessageContactController)
 
 export default routerContact

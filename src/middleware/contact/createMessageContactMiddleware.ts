@@ -1,7 +1,7 @@
-import { body } from 'express-validator'
+import { body } from "express-validator";
 
 const validateFieldsInsertMessageContact = [
-  body('full_name')
+  body('name')
     .isString()
     .withMessage("El valor ingresado debe ser una cadena de texto.")
     .notEmpty()
