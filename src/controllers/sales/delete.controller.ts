@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { SalesModel } from "../../database/models/index.models";
+import { SalesModel } from "../../database/models/index.model";
 
 export const DeleteSalesController = async (req: Request, res: Response) => {
   const { saleId } = req.params

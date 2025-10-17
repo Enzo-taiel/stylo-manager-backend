@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { validationResult } from "express-validator";
 import { createToken } from "../../helpers/jsonwebtoken";
-import { UsersModel } from "../../database/models/index.models";
+import { UsersModel } from "../../database/models/index.model";
 
 export const SigninController = async (req: Request, res: Response) => {
   const errors = validationResult(req);

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { AppointmentsModel } from '../../database/models/index.models';
+import { AppointmentsModel } from '../../database/models/index.model';
 import { IAppointment } from '../../database/interface/appointments.interface';
 
 export const getAllAppointmentsController = async (_req: Request, res: Response) => {

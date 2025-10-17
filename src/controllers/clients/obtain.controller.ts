@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ClientsModel } from "../../database/models/index.models";
+import { ClientsModel } from "../../database/models/index.model";
 
 export const getClientController = async (req: Request, res: Response) => {
   const sessionId = req.sessionId

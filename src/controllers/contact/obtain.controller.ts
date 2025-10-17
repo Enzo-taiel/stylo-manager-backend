@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ContactModel } from "../../database/models/index.models";
+import { ContactModel } from "../../database/models/index.model";
 
 export const getAllMessages = async (_req: Request, res: Response) => {
   try {

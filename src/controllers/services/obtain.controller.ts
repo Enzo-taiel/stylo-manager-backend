@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 // INTERFACE DATABASE
 import { IServices } from '../../database/interface'
 // DATABASE
-import { SalesModel, ServicesModel } from '../../database/models/index.models'
+import { SalesModel, ServicesModel } from '../../database/models/index.model'
 
 export const ObtainAllServicesController = async (_req: Request, res: Response) => {
   try {

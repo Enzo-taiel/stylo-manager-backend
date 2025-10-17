@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { validationResult } from "express-validator";
-import { ClientsModel } from "../../database/models/index.models";
+import { ClientsModel } from "../../database/models/index.model";
 
 export const createClientController = async (req: Request, res: Response) => {
   const errors = validationResult(req);

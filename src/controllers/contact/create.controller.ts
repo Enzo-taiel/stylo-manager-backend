@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { ContactModel } from "../../database/models/index.models";
+import { ContactModel } from "../../database/models/index.model";
 
 export const CreateMessageContactController = async (req: Request, res: Response) => {
   const errors = validationResult(req);

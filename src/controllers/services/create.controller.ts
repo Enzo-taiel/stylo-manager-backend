@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { ServicesModel } from '../../database/models/index.models';
+import { ServicesModel } from '../../database/models/index.model';
 
 export const CreateServiceController = async (req: Request, res: Response) => {
 

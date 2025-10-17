@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { EmployeesModel } from "../../database/models/index.models";
+import { EmployeesModel } from "../../database/models/index.model";
 
 export const CreateEmployeeController = async (req: Request, res: Response) => {
   const errors = validationResult(req);

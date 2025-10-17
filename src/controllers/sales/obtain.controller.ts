@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { SalesModel } from "../../database/models/index.models";
+import { SalesModel } from "../../database/models/index.model";
 
 export const ObtainSalesAllController = async (_req: Request, res: Response) => {
   try {

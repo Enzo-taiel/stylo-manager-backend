@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { Request, Response } from "express";
-import { AppointmentsModel, EmployeesModel, TempAppointmentsModel } from "../../database/models/index.models";
+import { AppointmentsModel, EmployeesModel, TempAppointmentsModel } from "../../database/models/index.model";
 
 export const deleteAppointmentByIdController = async (req: Request, res: Response) => {
   const appointmentId = req.params.appointmentId
