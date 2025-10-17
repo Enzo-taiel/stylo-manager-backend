@@ -1,5 +1,5 @@
 import { body, Meta } from 'express-validator'
-import { UsersModel } from '../../database/models/index.models'
+import { UsersModel } from '../../database/models/index.model'
 
 const verifyThatUserExist = async (username: string) => {
   const user = await UsersModel.findOne({ username });

@@ -1,5 +1,5 @@
 import { body, Meta } from 'express-validator'
-import { UsersModel } from '../../database/models/index.models'
+import { UsersModel } from '../../database/models/index.model'
 import { isMatchPassword } from '../../helpers/jsonwebtoken';
 
 const verifyThatUserExist = async (username: string, { req }: Meta) => {
