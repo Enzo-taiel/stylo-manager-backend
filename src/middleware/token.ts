@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 // MODELS
 import { decodingToken } from '../helpers/jsonwebtoken'
-import { UsersModel } from '../database/models/index.models'
+import { UsersModel } from '../database/models/index.model'
 import { IUser } from '../database/interface'
 
 const HandleAuthorizationDashboard = async (req: Request, res: Response, next: NextFunction) => {

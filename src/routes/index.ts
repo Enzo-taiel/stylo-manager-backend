@@ -8,5 +8,3 @@ export { default as routerEmployees } from './employees.routes';
 export { default as routerAppointments } from './appointments.routes';
 export { default as routerNotifications } from './notification.routes';
 export { default as routerExpoWebHooks } from './webhooks/expo.routes';
-
-

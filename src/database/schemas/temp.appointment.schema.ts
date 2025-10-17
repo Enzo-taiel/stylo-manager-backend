@@ -9,7 +9,7 @@ export const TempAppointmentsSchema: SchemaDefinition = {
     type: String,
     required: true
   },
-  phoneClient: {
+  clientPhone: {
     type: String,
     required: true
   },

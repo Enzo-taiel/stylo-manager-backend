@@ -1,14 +1,15 @@
 import { Server } from "socket.io";
 import { formatDate } from "../../helpers/formatDate";
 import { sendPushNotification } from "../../services/expo/expoService";
-import { TempAppointmentsModel } from "../../database/models/index.models";
+import { TempAppointmentsModel } from "../../database/models/index.model";
 import { sendWspCancelAppointmentSuccessfully } from "../../functions/sendWhatsapp";
 
 export const handleDeleteDocument = async (data: any, io: Server) => {
   const document = data.documentKey
   const clientData = await TempAppointmentsModel.findOne({ appointmentId: document._id })
+  
   await sendWspCancelAppointmentSuccessfully({
-    phone: "54" + clientData!.phoneClient,
+    phone: "54" + clientData!.clientPhone,
     clientName: clientData!.clientName,
     employeeName: clientData!.employeeName,
   })

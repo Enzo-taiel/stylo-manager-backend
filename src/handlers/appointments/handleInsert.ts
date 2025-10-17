@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import { formatDate } from "../../helpers/formatDate";
-import { AppointmentsModel } from "../../database/models/index.models";
+import { AppointmentsModel } from "../../database/models/index.model";
 import { sendPushNotification } from "../../services/expo/expoService";
 import { SendWhatsappSavedAppointmentSuccessfully } from "../../functions/sendWhatsapp";
 

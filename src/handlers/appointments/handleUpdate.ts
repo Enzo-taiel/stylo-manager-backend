@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import { AppointmentsModel } from "../../database/models/index.models";
+import { AppointmentsModel } from "../../database/models/index.model";
 
 export const handleUpdateDocument = async (data: any, io: Server) => {
   const document = data.documentKey
