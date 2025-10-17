@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { EmployeesModel } from '../../database/models/index.models'
+import { EmployeesModel } from '../../database/models/index.model'
 
 export const handleExpoTokenPushNotifications = async (req: Request, res: Response) => {
 
