@@ -1,5 +1,5 @@
 import { body, Meta } from 'express-validator';
-import { UsersModel } from '../../database/models/index.models';
+import { UsersModel } from '../../database/models/index.model';
 
 // Validación personalizada para verificar si el empleado ya existe
 const verifyThatEmployeeExist = async (full_name: string) => {
@@ -28,7 +28,7 @@ const validateStringArray = (arr: string[], fieldName: string) => {
 
 // Middleware de validación para crear un empleado
 const validateFieldsInsertEmployee = [
-  body('full_name')
+  body('name')
     .isString()
     .withMessage("El nombre debe ser una cadena de texto.")
     .notEmpty()

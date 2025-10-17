@@ -1,6 +1,6 @@
 import { body } from 'express-validator'
 import mongoose from 'mongoose'
-import { ServicesModel } from '../../database/models/index.models'
+import { ServicesModel } from '../../database/models/index.model'
 
 const verifyThatServiceAlreadyExist = async (title: string) => {
   const user = await ServicesModel.findOne({ title });
