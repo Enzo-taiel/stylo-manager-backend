@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import { getIO } from "../sockets/connect";
-import { AppointmentsModel } from "../models/index.models";
+import { AppointmentsModel } from "../models/index.model";
 import { handleInsertDocument, handleDeleteDocument, handleUpdateDocument } from "../../handlers/appointments";
 
 const changeStreamAppointment = AppointmentsModel.watch();
