@@ -1,1 +1,1 @@
-export { CreatePushNotificationController } from "./create.controller"
+export { CreatePushNotificationController, subscriptionCreateController } from "./create.controller"
