@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { AppointmentsModel, EmployeesModel } from "../../database/models/index.models";
+import { AppointmentsModel, EmployeesModel, SessionsModel } from "../../database/models/index.model";
 
 export const createAppointmentController = async (req: Request, res: Response) => {
 
@@ -29,6 +29,7 @@ export const createAppointmentController = async (req: Request, res: Response) =
       { $push: { appointments: appointment._id } },
     );
 
+    await SessionsModel.create({ sessionId, clientName, clientPhone })
     await sessionTransaction.commitTransaction()
 
     return res.status(200).json({ message: "Appoitment create successfully.", appointment, success: true, error: false })
