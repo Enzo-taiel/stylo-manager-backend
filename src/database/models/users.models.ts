@@ -1,8 +1,6 @@
 import { Schema } from 'mongoose';
 import bcrypt from 'bcrypt'
-// SCHEMAS
 import { UserSchema } from '../schemas'
-// INTERFACE DATABASE
 import { IUser } from '../interface'
 
 const Users_Schema = new Schema(UserSchema, { timestamps: true });
