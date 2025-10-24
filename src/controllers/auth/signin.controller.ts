@@ -1,19 +1,25 @@
 import { Request, Response } from "express"
 import { validationResult } from "express-validator";
-import { createToken } from "../../helpers/jsonwebtoken";
-import { UsersModel } from "../../database/models/index.model";
+import { createAccessToken, createRefreshToken } from "../../helpers/jsonwebtoken";
+import { UsersModel, BussinesModel } from "../../database/models/index.model";
+import { handleError } from "../../helpers/handleErrors";
+import { redis } from "../../database/redis";
 
 export const SigninController = async (req: Request, res: Response) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array()[0], error: true, success: false });
-  const { username } = req.body;
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array(), error: true, success: false });
+  const { credential } = req.body;
   try {
-    const user = await UsersModel.findOne({ username })
-    if(!user) return  res.status(400).json({ message: "user not exist", error: true, success: false });
-    const token = createToken(user._id)
-    return res.status(200).json({ message: "Login successfully.", user, token, error: false, success: true })
+    const user = await UsersModel.findOne({ $or: [{ email: credential }, { phone: credential }] })
+    const bussines = await BussinesModel.findOne({ owner: user!._id });
+    const accessToken = createAccessToken(user!._id);
+    const refreshToken = createRefreshToken(user!._id);
+
+    // Guardar el refresh token en Redis con TTL (por ejemplo, 7 días)
+    const ttlSeconds = 7 * 24 * 60 * 60;
+    await redis.set(`refresh:${user!._id}`, refreshToken, "EX", ttlSeconds);
+    return res.status(200).json({ message: "Sesion iniciada.", user, accessToken, refreshToken, bussines, error: false, success: true })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: "Error internal Server.", error: true, success: false })
+    return handleError(res, error, "Error al iniciar sesion.");
   }
 }
