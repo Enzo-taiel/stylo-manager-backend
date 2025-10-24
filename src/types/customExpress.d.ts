@@ -5,11 +5,9 @@ import { IUser } from '../database/interface';
 
 declare module 'express-serve-static-core' {
   interface Request {
-    businessName: string | null;
-    dbClient: connection;
-    dbAdmin: connection;
-    userAdmin: IUser | null;
-    passwordEncripted: string | null
+    user: IUser | null;
     sessionId: string
+    token: string
+    userId: Types.ObjectId | null
   }
 }
