@@ -27,7 +27,7 @@ const validateStringArray = (arr: string[], fieldName: string) => {
 }
 
 // Middleware de validación para crear un empleado
-const validateFieldsInsertEmployee = [
+export const validateFieldsInsertEmployee = [
   body('name')
     .isString()
     .withMessage("El nombre debe ser una cadena de texto.")
@@ -64,5 +64,3 @@ const validateFieldsInsertEmployee = [
   body('info.days_available').notEmpty().isString().withMessage("day_available debe ser una cadena de texto."),
   body('info.hours_available').notEmpty().isString().withMessage("hour_available debe ser una cadena de texto."),
 ];
-
-export default validateFieldsInsertEmployee;

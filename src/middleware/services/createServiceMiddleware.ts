@@ -25,7 +25,7 @@ const validationEmployeesVailable = (employees_vailable: string[]) => {
 }
 
 // Middleware de validación para el objeto de inicio de sesión
-const validateFieldsCreateService = [
+export const validateFieldsCreateService = [
   body('title')
     .notEmpty()
     .withMessage("El titulo del servicio es requerido.")
@@ -60,5 +60,3 @@ const validateFieldsCreateService = [
     .isArray()
     .withMessage("Los empleados del servicio deben estar en un array.")
 ];
-
-export default validateFieldsCreateService

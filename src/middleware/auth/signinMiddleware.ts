@@ -2,28 +2,26 @@ import { body, Meta } from 'express-validator'
 import { UsersModel } from '../../database/models/index.model'
 import { isMatchPassword } from '../../helpers/jsonwebtoken';
 
-const verifyThatUserExist = async (username: string, { req }: Meta) => {
-  const user = await UsersModel.findOne({ username });
-  if (!user) throw new Error('El nombre de usuario es incorrecto.');
+const verifyThatUserExist = async (credential: string, { req }: Meta) => {
+  const user = await UsersModel.findOne({ $or: [{ email: credential }, { phone: credential }] });
+  if (!user) throw new Error('Su usuario no existe.');
   req.passwordEncripted = user.password
 }
 
 const verifyPassword = async (password: string, { req }: Meta) => {
   const isMatch = await isMatchPassword(password, req.passwordEncripted!)
-  if (!isMatch) throw new Error('Contraseña incorrecta.');
+  if (!isMatch) throw new Error('Su contraseña es incorrecta.');
   req.passwordEncripted = null
 }
 
 // Middleware de validación para el objeto de inicio de sesión
 const validateFieldsSignin = [
   // Validation of the username
-  body('username')
+  body('credential')
     .isString()
     .withMessage("El valor ingresado debe ser una cadena de texto.")
     .notEmpty()
-    .withMessage("El nombre de usuario es requerido.")
-    .isLength({ min: 5 })
-    .withMessage('El nombre de usuario debe tener al menos 5 caracteres')
+    .withMessage("Su credencial es requerida.")
     .custom(verifyThatUserExist),
   // Validathion of the password 
   body('password')

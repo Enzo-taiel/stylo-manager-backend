@@ -16,35 +16,21 @@ const verifiMatchPasswordRepiter = async (password_repiter: string, { req }: Met
   if (!isMatch) throw new Error('Las contraseñas ingresadas no coinciden.')
 }
 
-// Middleware de validación para el objeto de inicio de sesión
 const validateFieldsSignup = [
-  // Validation of the name
-  body('name')
+  body('userName')
     .isString()
     .withMessage("El valor ingresado debe ser una cadena de texto.")
     .notEmpty()
     .withMessage("Ingrese su nombre.")
     .isLength({ min: 3 })
     .withMessage('Ingrese su nombre verdadero.'),
-  // Validathion of the last name 
-  body('last_name')
-    .isString()
-    .withMessage("El valor ingresado debe ser una cadena de texto.")
-    .notEmpty()
-    .withMessage("Ingrese su apellido.")
-    .isLength({ min: 3 })
-    .withMessage('Ingrese su apellido verdadero.'),
-  // Validation of the username
-  body('username')
+  body('userPhone')
     .isString()
     .withMessage("El valor ingresado debe ser una cadena de texto.")
     .notEmpty()
     .withMessage("Ingrese un nombre de usuario.")
-    .isLength({ min: 5 })
-    .withMessage('El nombre de usuario debe tener al menos 5 caracteres.')
-    .custom(verifyThatUserExist),
-  // Valitaion of the email
-  body('email')
+    .isLength({ min: 9 }),
+  body('userEmail')
     .isString()
     .withMessage("El valor ingresado debe ser una cadena de texto.")
     .notEmpty()
@@ -52,15 +38,6 @@ const validateFieldsSignup = [
     .isEmail()
     .withMessage("Ingrese un email valido.")
     .custom(verifyThatEmailExist),
-  // Validation of the business name
-  body('business')
-    .isString()
-    .withMessage("El valor ingresado debe ser una cadena de texto.")
-    .notEmpty()
-    .withMessage("Ingrese el nombre de su negocio.")
-    .isLength({ min: 4 })
-    .withMessage('Su nombre de negocio debe tener al menos 4 caracteres.'),
-  // Validation of the password
   body('password')
     .isString()
     .withMessage("El valor ingresado debe ser una cadena de texto.")
@@ -68,8 +45,7 @@ const validateFieldsSignup = [
     .withMessage("Ingrese su contraseña.")
     .isLength({ min: 6 })
     .withMessage('Su contraseña debe tener al menos 6 caracteres'),
-  // Validation of the password repiter
-  body('password_repiter')
+  body('passwordRepiter')
     .isString()
     .withMessage("El valor ingresado debe ser una cadena de texto.")
     .notEmpty()
@@ -77,6 +53,30 @@ const validateFieldsSignup = [
     .isLength({ min: 6 })
     .withMessage('Su contraseña debe tener al menos 6 caracteres.')
     .custom(verifiMatchPasswordRepiter)
+
+  // body('bussineName')
+  //   .isString()
+  //   .withMessage("El valor ingresado debe ser una cadena de texto.")
+  //   .notEmpty()
+  //   .withMessage("Ingrese el nombre de su negocio."),
+
+  // body("bussineAddres")
+  //   .notEmpty()
+  //   .withMessage("Ingrese su direccion del local.")
+  //   .isString()
+  //   .withMessage("La dirección debe ser un texto"),
+
+  // body("bussinePhone")
+  //   .notEmpty()
+  //   .withMessage("Ingrese el teléfono del local.")
+  //   .isString()
+  //   .withMessage("El teléfono debe ser un texto"),
+
+  // body("bussineEmail")
+  //   .notEmpty()
+  //   .withMessage("Ingrese el email del local.")
+  //   .isEmail()
+  //   .withMessage("Ingrese un email valido."),
 ];
 
 export default validateFieldsSignup
