@@ -13,13 +13,19 @@ export const ServicesSchema: SchemaDefinition = {
     type: String,
     required: true,
   },
+  business: {
+    type: mongoose.Schema.ObjectId,
+    ref: "business",
+    required: true
+  },
   price_kids: {
     type: String,
+    required: false
   },
   descriptions: [
     {
       type: String,
-      require: true
+      required: true
     }
   ],
   employees_available: [
@@ -29,5 +35,5 @@ export const ServicesSchema: SchemaDefinition = {
       required: true
     }
   ]
-  
+
 }

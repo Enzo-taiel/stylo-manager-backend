@@ -3,11 +3,11 @@ import mongoose, { SchemaDefinition } from 'mongoose'
 export const EmployeesSchema: SchemaDefinition = {
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   avatar_url: {
     type: String,
-    require: false,
+    required: false,
   },
   skills: [
     {
@@ -15,6 +15,11 @@ export const EmployeesSchema: SchemaDefinition = {
       require: true
     }
   ],
+  business: {
+    type: mongoose.Schema.ObjectId,
+    ref: "business",
+    required: true
+  },
   appointments: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -35,23 +40,26 @@ export const EmployeesSchema: SchemaDefinition = {
   ],
   info: {
     city: {
-      type: String
+      type: String,
+      required: false
     },
     instagramUsername: {
-      type: String
+      type: String,
+      required: false
     },
     days_available: {
       type: String,
-      require: true
+      required: true
     },
     hours_available: {
       type: String,
-      require: true
+      required: true
     }
   },
   jobs: [
     {
-      type: String
+      type: String,
+      required: false
     }
   ]
 }

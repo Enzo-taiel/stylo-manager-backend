@@ -22,14 +22,17 @@ export const createAppointmentController = async (req: Request, res: Response) =
       methodPayment,
       sessionId,
       clientName,
-      clientPhone
+      clientPhone,
+      business: req.businessId
     })
 
     await EmployeesModel.findByIdAndUpdate(employeeId,
       { $push: { appointments: appointment._id } },
     );
 
-    await SessionsModel.create({ sessionId, clientName, clientPhone })
+    const session = await SessionsModel.findOne({ $or: [{ sessionId }, { clientName }, { clientPhone }] })
+    if (!session) await SessionsModel.create({ sessionId, clientName, clientPhone })
+
     await sessionTransaction.commitTransaction()
 
     return res.status(200).json({ message: "Appoitment create successfully.", appointment, success: true, error: false })

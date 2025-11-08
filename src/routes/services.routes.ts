@@ -6,16 +6,18 @@ import {
   ObtainAllServicesController, CreateServiceController, 
   ObtanTopServicesByEmployee, ObtainServiceByIdController 
 } from '../controllers/services';
+import { identifyBusinessWebOnly } from '../middleware/business/identifyBusiness';
+import HandleAutentification from '../middleware/authentification';
 
 const routerServices = Router()
 
-routerServices.get("/obtain/all", ObtainAllServicesController)
-routerServices.get("/obtain/:serviceId", ObtainServiceByIdController)
+routerServices.get("/obtain/all", identifyBusinessWebOnly, ObtainAllServicesController)
+routerServices.get("/obtain/:serviceId", identifyBusinessWebOnly, ObtainServiceByIdController)
 
 routerServices.get("/top-services/:employeeId", ObtanTopServicesByEmployee)
 
-routerServices.post("/create", validateFieldsCreateService, CreateServiceController)
-routerServices.delete("/delete/:serviceId", DeleteServiceController)
-routerServices.put("/update/:serviceId", validateFieldsUpdateService, DeleteServiceController)
+routerServices.post("/create", validateFieldsCreateService, HandleAutentification, CreateServiceController)
+routerServices.delete("/delete/:serviceId", HandleAutentification, DeleteServiceController)
+routerServices.put("/update/:serviceId", validateFieldsUpdateService, HandleAutentification, DeleteServiceController)
 
 export default routerServices

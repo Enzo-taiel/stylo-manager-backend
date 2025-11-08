@@ -6,9 +6,10 @@ import { IServices } from '../../database/interface'
 // DATABASE
 import { SalesModel, ServicesModel } from '../../database/models/index.model'
 
-export const ObtainAllServicesController = async (_req: Request, res: Response) => {
+export const ObtainAllServicesController = async (req: Request, res: Response) => {
+  const business = req.businessId
   try {
-    const services: IServices[] = await ServicesModel.find().populate("employees_available")
+    const services: IServices[] = await ServicesModel.find({ business }).populate("employees_available")
     return res.status(200).json({ message: "Services obtain successfully.", services })
   } catch (error) {
     console.error(error)
@@ -18,10 +19,11 @@ export const ObtainAllServicesController = async (_req: Request, res: Response) 
 
 export const ObtainServiceByIdController = async (req: Request, res: Response) => {
   const serviceId = req.params.serviceId
+  const business = req.businessId
   try {
-    const service = await ServicesModel.findById(serviceId).populate("employees_available")
+    const service = await ServicesModel.find({ _id: serviceId, business }).populate("employees_available")
     if (!service) return res.status(404).json({ message: "El servicio no existe", error: true, success: false })
-    return res.status(200).json({ message: "Servicios obtenidos satisfactoriamente.", service, error: false, success: true })
+    return res.status(200).json({ message: "Servicios obtenidos satisfactoriamente.", service: service[0], error: false, success: true })
   } catch (error) {
     console.error(error)
     return res.status(500).json({ message: "Error internal Server.", error: true, success: false })

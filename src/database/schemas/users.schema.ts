@@ -21,7 +21,11 @@ export const UserSchema: SchemaDefinition = {
   },
   business: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "bussines",
+    ref: "business",
     required: false,
   },
+  expo_push_token: {
+    type: String,
+    required: false
+  }
 }

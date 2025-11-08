@@ -33,6 +33,11 @@ export const AppointmentsSchema: SchemaDefinition = {
     type: String,
     required: true
   },
+  business: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "business",
+    required: true
+  },
   paymentId: {
     type: String,
     required: false

@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { EmployeesModel } from "../../database/models/index.model";
 
-export const ObtainAllEmployeesController = async (_req: Request, res: Response) => {
+export const ObtainAllEmployeesController = async (req: Request, res: Response) => {
+  const business = req.businessId
   try {
-    const employees = await EmployeesModel.find().populate("appointments")
+    const employees = await EmployeesModel.find({ business }).populate("appointments")
     return res.status(200).json({ message: "Employees obtain successfully.", employees, success: true, error: false })
   } catch (error) {
     console.error(error)
@@ -13,6 +14,7 @@ export const ObtainAllEmployeesController = async (_req: Request, res: Response)
 
 export const ObtainEmployeeByIdController = async (req: Request, res: Response) => {
   const employeeId: string = req.params.employeeId
+
   try {
     const employee = await EmployeesModel.findById(employeeId)
       .populate({
