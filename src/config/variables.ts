@@ -19,3 +19,8 @@ export const WEB_PUSH = {
   VAPID_PUBLIC_KEY: process.env.VAPID_PUBLIC_KEY || "BAuDc4bN2CRxSkUzGukQfFDs-SdqilT1nAc1XnVdzn4IrI1DJcZ10IfCQN8Ydb7BGCvYSRfKZS48fHSgchPL0aI",
   VAPID_PRIVATE_KEY: process.env.VAPID_PRIVATE_KEY || "VhC1-HwDsy2JD4XxQht9iTMkCiO5P3HFUkwbALcP704"
 }
+
+export const SUPABASE = {
+  SUPABASE_URL: !isDevelopment ? process.env.SUPABASE_URL! : 'https://bgzbltnllqahdglxrkah.supabase.co',
+  SUPABASE_SERVICE_ROLE_KEY: !isDevelopment ? process.env.SUPABASE_SERVICE_ROLE_KEY! : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnemJsdG5sbHFhaGRnbHhya2FoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MTYxNDk0MywiZXhwIjoyMDc3MTkwOTQzfQ.CmXZP4ftRQuByHo9qddFNGEGA8RurVTVhMcf_Va3DlA"
+}

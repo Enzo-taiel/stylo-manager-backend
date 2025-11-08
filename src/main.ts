@@ -6,11 +6,11 @@ import Morgan from './middleware/morgan';
 import { PORT } from './config/variables';
 import { connectDB } from './database/connect';
 import routerClients from './routes/clients.routes';
-import Express, { Application, json } from 'express';
+import Express, { Application, json, urlencoded } from 'express';
 import { sessionMiddleware } from './middleware/session';
 import { createServer, Server as HttpServer } from "http";
 import initializeSocket from './database/sockets/connect';
-import { routerAuth, routerEmployees, routerServices, routerContacts, routerAppointments, routerSales, routerExpoWebHooks, routerNotifications } from './routes';
+import { routerAuth, routerEmployees, routerServices, routerContacts, routerAppointments, routerSales, routerExpoWebHooks, routerNotifications, routerBussines } from './routes';
 
 export class Server {
   private PORT: number;
@@ -27,6 +27,7 @@ export class Server {
     this.APP.use(Cors);
     this.APP.use(Morgan);
     this.APP.use(json());
+    this.APP.use(urlencoded({ extended: true }))
     this.APP.use(Helmet());
     this.APP.use(compression());
     this.APP.use(cookieParser())
@@ -39,6 +40,7 @@ export class Server {
     this.APP.use("/api/v1/client", routerClients);
     this.APP.use("/api/v1/contact", routerContacts);
     this.APP.use("/api/v1/service", routerServices);
+    this.APP.use("/api/v1/business", routerBussines);
     this.APP.use("/api/v1/employee", routerEmployees);
     this.APP.use("/api/v1/webhook", routerExpoWebHooks);
     this.APP.use("/api/v1/appointment", routerAppointments);
