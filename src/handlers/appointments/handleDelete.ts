@@ -7,19 +7,22 @@ import { sendWspCancelAppointmentSuccessfully } from "../../functions/sendWhatsa
 export const handleDeleteDocument = async (data: any, io: Server) => {
   const document = data.documentKey
   const clientData = await TempAppointmentsModel.findOne({ appointmentId: document._id })
-  
-  await sendWspCancelAppointmentSuccessfully({
-    phone: "54" + clientData!.clientPhone,
-    clientName: clientData!.clientName,
-    employeeName: clientData!.employeeName,
-  })
 
-  await clientData!.deleteOne()
+  if (!clientData) return
+  // await sendWspCancelAppointmentSuccessfully({
+  //   phone: "54" + clientData!.clientPhone,
+  //   clientName: clientData!.clientName,
+  //   employeeName: clientData!.employeeName,
+  // })
 
-  io.emit("delete-appointment", document._id)
+
+  io.emit("appointment:deleted", document._id)
 
   await sendPushNotification(
     clientData!.expoPushToken,
-    `Cancelacion de turno para ${clientData!.employeeName.split(" ")[0]}!`,
-    `${clientData!.clientName.split(" ")[0]} acaba de cancelar la cita del dia ${formatDate(clientData!.date)} a las ${clientData!.hour} con ${clientData!.employeeName.split(" ")[0]}`)
+    `Cancelacion de turno para ${clientData!.employeeName}!`,
+    `${clientData!.clientName} acaba de cancelar la cita del dia ${formatDate(clientData!.date)} a las ${clientData!.hour} con ${clientData!.employeeName.split(" ")[0]}`
+  )
+
+  await clientData!.deleteOne()
 };
