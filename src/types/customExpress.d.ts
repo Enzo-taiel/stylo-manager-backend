@@ -9,5 +9,6 @@ declare module 'express-serve-static-core' {
     sessionId: string
     token: string
     userId: Types.ObjectId | null
+    businessId?: Types.ObjectId
   }
 }

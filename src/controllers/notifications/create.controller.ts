@@ -1,6 +1,6 @@
 import WebPush from "web-push";
 import { Request, Response } from "express";
-import { ClientsModel, SessionsModel } from "../../database/models/index.model";
+import { ClientsModel, SessionsModel, UsersModel } from "../../database/models/index.model";
 
 export const subscriptionCreateController = async (req: Request, res: Response) => {
   const sessionId = req.sessionId
@@ -37,4 +37,21 @@ export const CreatePushNotificationController = async (req: Request, res: Respon
     console.error(error)
     return res.status(500).json({ message: "Error internal Server.", error: true, success: false })
   }
+}
+
+export const CreateExpoNotification = async (req: Request, res: Response) => {
+  const { token } = req.body;
+  const userId = req.userId
+
+  console.log({token})  
+
+  try {
+    await UsersModel.findByIdAndUpdate(userId, { expo_push_token: token });
+    return res.status(200).json({ message: "Notification send successfully.", error: false, succes: true })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ message: "Error internal Server.", error: true, success: false })
+  }
+
+
 }
