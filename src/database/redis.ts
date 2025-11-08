@@ -13,4 +13,5 @@ redis.on("connect", () => {
 
 redis.on("error", (err) => {
   console.error("[Redis] Error de conexión ❌", err);
+  process.exit(1);
 });

@@ -4,7 +4,6 @@ export const SessionSchema: SchemaDefinition = {
   sessionId: {
     type: String,
     required: true,
-    unique: true
   },
   clientName: {
     type: String
@@ -27,5 +26,5 @@ export const SessionSchema: SchemaDefinition = {
         require: false
       }
     }
-  }
+  } // aqui la subscription se utiliza para enviarle notificaciones al cliente
 };
