@@ -4,7 +4,7 @@ import { ServicesModel } from "../../database/models/index.model";
 
 export const UpdateServiceController = async (req: Request, res: Response) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  if (!errors.isEmpty()) return res.status(400).json({ inputError: errors.array()[0] });
 
   const { serviceId } = req.params;
   const updateData = req.body;

@@ -7,7 +7,7 @@ import { redis } from "../../database/redis";
 
 export const SignupController = async (req: Request, res: Response) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array()[0], error: true, success: false });
+  if (!errors.isEmpty()) return res.status(400).json({ inputError: errors.array()[0], error: true, success: false });
   const { userName, userEmail, userPhone, password } = req.body;
   try {
     const user = await UsersModel.create({
