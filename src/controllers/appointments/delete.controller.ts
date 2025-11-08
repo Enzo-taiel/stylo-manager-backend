@@ -10,16 +10,17 @@ export const deleteAppointmentByIdController = async (req: Request, res: Respons
     const appointment = await AppointmentsModel.findById(appointmentId)
       .populate({ path: "client", select: "phone name" })
       .populate({ path: "service", select: "title" })
-      .populate({ path: "employee", select: "_id name expoPushToken" })
+      .populate({ path: "employee", select: "_id name" })
+      .populate({ path: "business", populate: { path: "owner", select: "expo_push_token" } });
 
-    if (!appointment) return res.status(204).json({ message: "Not appointment exist.", success: false, error: false})
+    if (!appointment) return res.status(204).json({ message: "Not appointment exist.", success: false, error: false })
 
     await TempAppointmentsModel.create({
       employeeName: appointment.employee.name,
       clientName: appointment.clientName,
-      phoneClient: appointment.clientPhone,
+      clientPhone: appointment.clientPhone,
       appointmentId: appointment._id,
-      expoPushToken: appointment.employee.expoPushToken,
+      expoPushToken: appointment.business.owner.expo_push_token,
       date: appointment.date,
       hour: appointment.hour
     })
