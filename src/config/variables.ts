@@ -2,7 +2,7 @@ const isDevelopment = process.env.NODE_ENV === "development"
 
 export const CORS_ORIGIN = process.env.CORS_ORIGINS?.split(',') || ["http://localhost:8081", "http://192.168.1.46:8081", "exp://192.168.1.46:8081"]
 export const PORT = Number(process.env.PORT) || 8080
-export const SECRET_KEY_JWT = isDevelopment ? "shhh" : process.env.SECRET_KEY_JWT_PRODUCTION!
+export const SECRET_KEY_JWT = isDevelopment ? "shhh" : process.env.SECRET_KEY_JWT!
 
 export const WHATSAPP_ENV = {
   WHATSAPP_ACCESS_TOKEN: process.env.WHATSAPP_ACCESS_TOKEN || "EAAHiUe1nZB1QBOxxINzciiIKUuRj0ZBNUfwJhvmIG1ZCPuJ4VRFU5ptmlUHsxsgZCclBrhloFoC4GCGoDROxi8MkFA7LI48M1eZCt6dwpgkS0TylUu3b5Hu8JIivXtRU3fHviywZClqPduqZCegt5ne54XV5zMHbvMk1bUv2eXO5jPrh8IepOssNovOfSaTawcWtEGzX5VZCeYb2MIkObCr6rIuuIgcZD",
