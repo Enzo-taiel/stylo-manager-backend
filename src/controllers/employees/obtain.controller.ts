@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import { Request, Response } from "express";
 import { EmployeesModel } from "../../database/models/index.model";
 
@@ -14,6 +15,9 @@ export const ObtainAllEmployeesController = async (req: Request, res: Response) 
 
 export const ObtainEmployeeByIdController = async (req: Request, res: Response) => {
   const employeeId: string = req.params.employeeId
+  const isObjectId = mongoose.Types.ObjectId.isValid(employeeId)
+
+  if(!isObjectId) return res.status(404).json({ message: "Employee not already exist..", error: true, success: false })
 
   try {
     const employee = await EmployeesModel.findById(employeeId)
