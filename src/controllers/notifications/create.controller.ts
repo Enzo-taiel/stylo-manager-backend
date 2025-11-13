@@ -42,9 +42,6 @@ export const CreatePushNotificationController = async (req: Request, res: Respon
 export const CreateExpoNotification = async (req: Request, res: Response) => {
   const { token } = req.body;
   const userId = req.userId
-
-  console.log({token})  
-
   try {
     await UsersModel.findByIdAndUpdate(userId, { expo_push_token: token });
     return res.status(200).json({ message: "Notification send successfully.", error: false, succes: true })
@@ -52,6 +49,4 @@ export const CreateExpoNotification = async (req: Request, res: Response) => {
     console.error(error)
     return res.status(500).json({ message: "Error internal Server.", error: true, success: false })
   }
-
-
 }
