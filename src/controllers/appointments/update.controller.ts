@@ -1,42 +1,61 @@
 import mongoose from "mongoose";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { AppointmentsModel, EmployeesModel } from "../../database/models/index.model";
 
-export const updateAppointmentByIdController = async (req: Request, res: Response) => {
-  const appointmentId = req.params.appointmentId as string
-  const { serviceId, employeeId, date, hour, methodPayment, clientName, clientPhone } = req.body
-  const sessionTransaction = await mongoose.startSession()
-  sessionTransaction.startTransaction()
+export const updateAppointmentByIdController = async (req: Request, res: Response, next: NextFunction) => {
+  const appointmentId = req.params.appointmentId as string;
+  const { serviceId, employeeId, date, hour, methodPayment, clientName, clientPhone } = req.body;
+  const sessionTransaction = await mongoose.startSession();
+  sessionTransaction.startTransaction();
   try {
-    const currentAppointment = await AppointmentsModel.findById(appointmentId)
-    if (!currentAppointment) return res.status(204).json({ message: "Appointment not exist.", error: true, success: false })
-    const newAppointment = await AppointmentsModel.findByIdAndUpdate(
-      appointmentId, {
+    const currentAppointment = await AppointmentsModel.findById(appointmentId).session(sessionTransaction);
+    if (!currentAppointment) {
+      await sessionTransaction.abortTransaction();
+      return next({ status: 404, message: "Appointment not found" });
+    }
+
+    const oldEmployeeId = currentAppointment.employee;
+    const newAppointment = await AppointmentsModel.findByIdAndUpdate(appointmentId, {
       employee: employeeId,
       service: serviceId,
-      date: date,
+      date,
       hour,
       clientName,
       clientPhone,
       methodPayment
-    }, { new: true })
-    if (!newAppointment) return res.status(204).json({ message: "Appointment not exist.", success: false, error: true })
-    if (currentAppointment.employee !== newAppointment.employee) {
-      await EmployeesModel.findByIdAndUpdate(currentAppointment.employee,
-        { $pull: { appointments: newAppointment._id } }
-      )
-      await EmployeesModel.findByIdAndUpdate(employeeId,
-        { $push: { appointments: newAppointment._id } }
+    }, { new: true, session: sessionTransaction });
 
-      )
+    if (!newAppointment) {
+      await sessionTransaction.abortTransaction();
+      return next({ status: 404, message: "Appointment not found" });
     }
-    await sessionTransaction.commitTransaction()
-    return res.status(200).json({ message: "Appointments update successfully.", appointment: newAppointment, success: true, error: false })
+
+    // Si cambió el empleado, actualizar sus listas
+    if (!oldEmployeeId.equals(newAppointment.employee)) {
+      // Sacar la cita del empleado viejo
+      await EmployeesModel.findByIdAndUpdate(oldEmployeeId,
+        { $pull: { appointments: newAppointment._id } },
+        { session: sessionTransaction });
+
+      // Agregar la cita al empleado nuevo
+      await EmployeesModel.findByIdAndUpdate(newAppointment.employee,
+        { $push: { appointments: newAppointment._id } },
+        { session: sessionTransaction });
+    }
+
+    await sessionTransaction.commitTransaction();
+
+    return res.status(200).json({
+      message: "Appointment updated successfully.",
+      appointment: newAppointment,
+      success: true,
+      error: false
+    });
+
   } catch (error) {
-    await sessionTransaction.abortTransaction()
-    console.error(error)
-    return res.status(500).json({ message: "Error internal Server.", success: true, error: false })
+    await sessionTransaction.abortTransaction();
+    return next(error);
   } finally {
-    sessionTransaction.endSession()
+    sessionTransaction.endSession();
   }
-}
+};

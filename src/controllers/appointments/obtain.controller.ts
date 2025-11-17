@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { AppointmentsModel } from '../../database/models/index.model';
 import { IAppointment } from '../../database/interface/appointments.interface';
 
-export const getAllAppointmentsController = async (_req: Request, res: Response) => {
+export const getAllAppointmentsController = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const appointments: IAppointment[] = await AppointmentsModel.find()
       .populate("service")
@@ -11,12 +11,11 @@ export const getAllAppointmentsController = async (_req: Request, res: Response)
 
     return res.status(200).json({ message: "Appointments obtain successfully.", appointments })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: "Error internal Server." })
+    return next(error)
   }
 }
 
-export const getAppointementByIdController = async (req: Request, res: Response) => {
+export const getAppointementByIdController = async (req: Request, res: Response, next: NextFunction) => {
 
   const appointmentId = req.params.appointmentId
 
@@ -29,26 +28,22 @@ export const getAppointementByIdController = async (req: Request, res: Response)
       .populate("client", "full_name phone createdAt subscription")
       .populate("employee", "skills full_name avatar_url")
 
-    if (!appointment) return res.status(400).json({ message: "No reservation found." })
+    if (!appointment) return next({ status: 404, message: "Appointment not found" });
     return res.status(200).json({
       message: `Appointment by _id obtain successfully`,
       appointment
     })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: "Error internal Server." })
+    return next(error)
   }
 }
 
-export const getAppointmentBySessionController = async (req: Request, res: Response) => {
-
+export const getAppointmentBySessionController = async (req: Request, res: Response, next: NextFunction) => {
   const sessionId = req.sessionId
   try {
     const appointments = await AppointmentsModel.find({ sessionId }).populate("service").populate("employee")
     return res.status(200).json({ message: `Appointment by session obtain successfully`, appointments })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: "Error internal Server." })
+    return next(error)
   }
-
 }

@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
-import { validationResult } from "express-validator";
+import { NextFunction, Request, Response } from "express";
+import { validationResult,  } from "express-validator";
 import { EmployeesModel } from "../../database/models/index.model";
 import { supabase } from "../../helpers/supabase";
 
-export const CreateEmployeeController = async (req: Request, res: Response) => {
+export const CreateEmployeeController = async (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ inputError: errors.array()[0], success: false, error: true });
+  if (!errors.isEmpty()) return next({ inputError: errors.array()[0] })
 
   const { name, skills, days_unavailable, hours_unavailable, info, existingJobs } = req.body;
   // @ts-ignore — Multer agrega los campos dinámicamente
@@ -85,6 +85,6 @@ export const CreateEmployeeController = async (req: Request, res: Response) => {
     return res.status(200).json({ message: "Empleado creado correctamente.", employee, success: true, error: false })
   } catch (error) {
     console.error(error)
-    return res.status(500).json({ message: "Error internal Server.", success: false, error: true })
+    return next(error)
   }
 }
