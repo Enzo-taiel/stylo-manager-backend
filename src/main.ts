@@ -11,6 +11,7 @@ import { sessionMiddleware } from './middleware/session';
 import { createServer, Server as HttpServer } from "http";
 import initializeSocket from './database/sockets/connect';
 import { routerAuth, routerEmployees, routerServices, routerContacts, routerAppointments, routerSales, routerExpoWebHooks, routerNotifications, routerBussines } from './routes';
+import { errorMiddleware } from './middleware/employees/error';
 
 export class Server {
   private PORT: number;
@@ -45,6 +46,7 @@ export class Server {
     this.APP.use("/api/v1/webhook", routerExpoWebHooks);
     this.APP.use("/api/v1/appointment", routerAppointments);
     this.APP.use("/api/v1/notification", routerNotifications);
+    this.APP.use(errorMiddleware)
   }
 
   public async startServer() {
