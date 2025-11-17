@@ -1,82 +1,59 @@
-import { body, Meta } from 'express-validator'
-import { UsersModel } from '../../database/models/index.model'
+import { body, Meta } from "express-validator";
+import { UsersModel } from "../../database/models/index.model";
 
-const verifyThatUserExist = async (username: string) => {
-  const user = await UsersModel.findOne({ username });
-  if (user) throw new Error('El nombre de usuario ingresado ya existe.');
-}
+// Validación de teléfono profesional
+const phoneRegex = /^[+]?[0-9]{7,15}$/;
 
+// Email existente (USANDO .exists → MÁS RÁPIDO)
 const verifyThatEmailExist = async (email: string) => {
-  const user = await UsersModel.findOne({ email });
-  if (user) throw new Error('El email ingresado ya existe.');
-}
+  const exists = await UsersModel.exists({ email });
+  if (exists) throw new Error("El email ingresado ya está registrado.");
+};
 
-const verifiMatchPasswordRepiter = async (password_repiter: string, { req }: Meta) => {
-  const isMatch = password_repiter === req.body.password
-  if (!isMatch) throw new Error('Las contraseñas ingresadas no coinciden.')
-}
+// Teléfono existente (USANDO .exists → MÁS RÁPIDO)
+const verifyThatPhoneExist = async (phone: string) => {
+  const exists = await UsersModel.exists({ phone });
+  if (exists) throw new Error("El teléfono ingresado ya está registrado.");
+};
+
+// Password repeat
+const verifyMatchPasswordRepeat = (repeat: string, { req }: Meta) => {
+  if (repeat !== req.body.password)
+    throw new Error("Las contraseñas no coinciden.");
+  return true;
+};
 
 const validateFieldsSignup = [
-  body('userName')
-    .isString()
-    .withMessage("El valor ingresado debe ser una cadena de texto.")
-    .notEmpty()
-    .withMessage("Ingrese su nombre.")
-    .isLength({ min: 3 })
-    .withMessage('Ingrese su nombre verdadero.'),
-  body('userPhone')
-    .isString()
-    .withMessage("El valor ingresado debe ser una cadena de texto.")
-    .notEmpty()
-    .withMessage("Ingrese un nombre de usuario.")
-    .isLength({ min: 9 }),
-  body('userEmail')
-    .isString()
-    .withMessage("El valor ingresado debe ser una cadena de texto.")
-    .notEmpty()
-    .withMessage("Ingrese su email.")
-    .isEmail()
-    .withMessage("Ingrese un email valido.")
+  // Nombre
+  body("userName")
+    .trim()
+    .notEmpty().withMessage("Ingrese su nombre.")
+    .isLength({ min: 3 }).withMessage("Ingrese un nombre válido."),
+
+  // Teléfono
+  body("userPhone")
+    .trim()
+    .notEmpty().withMessage("Ingrese un número de teléfono.")
+    .matches(phoneRegex).withMessage("Ingrese un número de teléfono válido.")
+    .custom(verifyThatPhoneExist),
+
+  // Email
+  body("userEmail")
+    .trim()
+    .notEmpty().withMessage("Ingrese su email.")
+    .isEmail().withMessage("Ingrese un email válido.")
     .custom(verifyThatEmailExist),
-  body('password')
-    .isString()
-    .withMessage("El valor ingresado debe ser una cadena de texto.")
-    .notEmpty()
-    .withMessage("Ingrese su contraseña.")
-    .isLength({ min: 6 })
-    .withMessage('Su contraseña debe tener al menos 6 caracteres'),
-  body('passwordRepiter')
-    .isString()
-    .withMessage("El valor ingresado debe ser una cadena de texto.")
-    .notEmpty()
-    .withMessage("Repita su contraseña.")
-    .isLength({ min: 6 })
-    .withMessage('Su contraseña debe tener al menos 6 caracteres.')
-    .custom(verifiMatchPasswordRepiter)
 
-  // body('bussineName')
-  //   .isString()
-  //   .withMessage("El valor ingresado debe ser una cadena de texto.")
-  //   .notEmpty()
-  //   .withMessage("Ingrese el nombre de su negocio."),
+  // Contraseña
+  body("password")
+    .notEmpty().withMessage("Ingrese su contraseña.")
+    .isLength({ min: 6 }).withMessage("Debe tener al menos 6 caracteres."),
 
-  // body("bussineAddres")
-  //   .notEmpty()
-  //   .withMessage("Ingrese su direccion del local.")
-  //   .isString()
-  //   .withMessage("La dirección debe ser un texto"),
-
-  // body("bussinePhone")
-  //   .notEmpty()
-  //   .withMessage("Ingrese el teléfono del local.")
-  //   .isString()
-  //   .withMessage("El teléfono debe ser un texto"),
-
-  // body("bussineEmail")
-  //   .notEmpty()
-  //   .withMessage("Ingrese el email del local.")
-  //   .isEmail()
-  //   .withMessage("Ingrese un email valido."),
+  // Repetir contraseña
+  body("passwordRepiter")
+    .notEmpty().withMessage("Repita su contraseña.")
+    .isLength({ min: 6 }).withMessage("Debe tener al menos 6 caracteres.")
+    .custom(verifyMatchPasswordRepeat),
 ];
 
-export default validateFieldsSignup
+export default validateFieldsSignup;
