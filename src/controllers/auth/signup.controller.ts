@@ -1,13 +1,12 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
-import { handleError } from "../../helpers/handleErrors";
 import { createAccessToken, createRefreshToken } from "../../helpers/jsonwebtoken";
 import { UsersModel } from "../../database/models/index.model";
 import { redis } from "../../database/redis";
 
-export const SignupController = async (req: Request, res: Response) => {
+export const SignupController = async (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ inputError: errors.array()[0], error: true, success: false });
+  if (!errors.isEmpty()) return next({ inputError: errors.array()[0] });
   const { userName, userEmail, userPhone, password } = req.body;
   try {
     const user = await UsersModel.create({
@@ -23,6 +22,6 @@ export const SignupController = async (req: Request, res: Response) => {
     await redis.set(`refresh:${user!._id}`, refreshToken, "EX", ttlSeconds);
     return res.status(201).json({ success: true, message: "Usuario creados correctamente", accessToken, refreshToken, user });
   } catch (error) {
-    return handleError(res, error, "Error al registrar usuario");
+    return next(error);
   }
 }

@@ -1,24 +1,37 @@
-import { Request, Response } from "express"
-import { handleError } from "../../helpers/handleErrors";
+import { Request, Response, NextFunction } from "express"
 import { createAccessToken, decodeToken, verifyTokenType } from "../../helpers/jsonwebtoken";
 import { redis } from "../../database/redis";
 
-export const RefreshTokenController = async (req: Request, res: Response) => {
+export const RefreshTokenController = async (req: Request, res: Response, next: NextFunction) => {
   const { refreshToken } = req.body;
-  if (!refreshToken) return res.status(401).json({ message: "Missing token" });
+  if (!refreshToken) return next({ status: 401, message: "Missing refresh token" });
 
   try {
+
     const payload = decodeToken(refreshToken);
     verifyTokenType(payload, "refresh");
 
-     const storedToken = await redis.get(`refresh:${payload._id}`);
-    if (!storedToken || storedToken !== refreshToken) {
-      return res.status(401).json({ message: "Refresh token invalid or revoked" });
+    const userId = payload?._id;
+    if (!userId) {
+      return next({ status: 401, message: "Invalid refresh token payload" });
     }
 
-    const newAccessToken = createAccessToken(payload._id);
-    res.json({ accessToken: newAccessToken });
+    // Validar que el refresh token sea el registrado
+    const storedToken = await redis.get(`refresh:${userId}`);
+    if (!storedToken || storedToken !== refreshToken) {
+      return next({ status: 401, message: "Refresh token invalid or revoked" });
+    }
+
+    // Emitir nuevo access token
+    const newAccessToken = createAccessToken(userId);
+
+    return res.status(200).json({
+      success: true,
+      error: false,
+      message: "Access token refreshed successfully.",
+      accessToken: newAccessToken
+    });
   } catch (error) {
-    return handleError(res, error, "Error refreshing token.");
+    return next(error);
   }
 }
