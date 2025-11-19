@@ -2,6 +2,9 @@ import { ERROR_CODES } from "./errorCodes";
 import { ValidationError } from "express-validator";
 
 export function createError(err: any) {
+
+  console.log({ err })
+
   // 🧪 Es un error de express-validator
   if (err?.inputError && err.inputError.msg) {
     const e: ValidationError = err.inputError;
