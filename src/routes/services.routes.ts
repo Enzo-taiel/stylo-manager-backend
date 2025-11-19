@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { DeleteServiceController } from '../controllers/services/delete.controller';
 import { validateFieldsCreateService } from '../middleware/services/createServiceMiddleware';
 import { validateFieldsUpdateService } from '../middleware/services/updateServiceMiddleware';
 import { 
   ObtainAllServicesController, CreateServiceController, 
-  ObtanTopServicesByEmployee, ObtainServiceByIdController 
+  ObtanTopServicesByEmployee, ObtainServiceByIdController,
+  UpdateServiceController, DeleteServiceController
 } from '../controllers/services';
 import { identifyBusinessWebOnly } from '../middleware/business/identifyBusiness';
 import HandleAutentification from '../middleware/authentification';
@@ -18,6 +18,6 @@ routerServices.get("/top-services/:employeeId", ObtanTopServicesByEmployee)
 
 routerServices.post("/create", validateFieldsCreateService, HandleAutentification, CreateServiceController)
 routerServices.delete("/delete/:serviceId", HandleAutentification, DeleteServiceController)
-routerServices.put("/update/:serviceId", validateFieldsUpdateService, HandleAutentification, DeleteServiceController)
+routerServices.put("/update/:serviceId", validateFieldsUpdateService, HandleAutentification, UpdateServiceController)
 
 export default routerServices
