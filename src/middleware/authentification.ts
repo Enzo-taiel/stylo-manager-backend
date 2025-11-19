@@ -7,24 +7,50 @@ const HandleAutentification = async (req: Request, res: Response, next: NextFunc
 
   const authHeader = req.headers.authorization as string
   const accessToken = authHeader && authHeader.split(" ")[1]
-  if (!accessToken) return res.status(401).send("You are not authorized to make this enquiry.")
+  if (!accessToken) {
+    return next({
+      httpStatus: 401,
+      code: "NO_TOKEN",
+      message: "No estás autorizado para realizar esta consulta."
+    })
+  }
 
-  const isBlacklisted = await redis.get(`bl:${accessToken}`);
-  if (isBlacklisted) return res.status(401).json({ message: "Token revocado" });
 
   try {
-    const decoded = decodeToken(accessToken) as unknown as { _id: string }
+    const isBlacklisted = await redis.get(`bl:${accessToken}`);
+    if (isBlacklisted) {
+      return next({
+        httpStatus: 401,
+        code: "TOKEN_REVOKED",
+        message: "Token revocado."
+      })
+    }
+
+    const decoded = decodeToken(accessToken) as { _id: string }
     verifyTokenType(decoded, "access");
 
     const user = await UsersModel.findById(decoded?._id)
-    const business = await BusinessModel.findOne({ owner: user?._id})
-    if (!user) return res.status(400).json({ message: "invalid token." })
+    if (!user) {
+      return next({
+        httpStatus: 401,
+        code: "INVALID_USER",
+        message: "Token inválido."
+      })
+    }
+
+    const business = await BusinessModel.findOne({ owner: user._id })
+
     req.userId = user._id
-    req.token = accessToken;
     req.businessId = business?._id
-    next();
+    req.token = accessToken
+
+    return next()
   } catch (err) {
-    return res.status(401).json({ message: "Token inválido" });
+    return next({
+      httpStatus: 401,
+      code: "INVALID_TOKEN",
+      message: "Token inválido."
+    })
   }
 }
 
