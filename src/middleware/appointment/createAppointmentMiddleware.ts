@@ -4,35 +4,35 @@ import mongoose from 'mongoose';
 const validateFieldsInsertAppintments = [
   // ✅ serviceId
   body('serviceId')
-    .isString()
-    .withMessage("El ID del servicio debe ser una cadena de texto.")
     .notEmpty()
     .withMessage("El ID del servicio es requerido.")
+    .isString()
+    .withMessage("El ID del servicio debe ser una cadena de texto.")
     .custom((value) => mongoose.Types.ObjectId.isValid(value))
     .withMessage("El ID del servicio no es un ObjectId válido."),
 
   // ✅ employeeId
   body('employeeId')
-    .isString()
-    .withMessage("El ID del empleado debe ser una cadena de texto.")
     .notEmpty()
     .withMessage("El ID del empleado es requerido.")
+    .isString()
+    .withMessage("El ID del empleado debe ser una cadena de texto.")
     .custom((value) => mongoose.Types.ObjectId.isValid(value))
     .withMessage("El ID del empleado no es un ObjectId válido."),
 
   // ✅ clientName
   body('clientName')
-    .isString()
-    .withMessage("El nombre del cliente debe ser una cadena de texto.")
     .notEmpty()
-    .withMessage("El nombre del cliente es requerido."),
+    .withMessage("El nombre del cliente es requerido.")
+    .isString()
+    .withMessage("El nombre del cliente debe ser una cadena de texto."),
 
   // ✅ clientPhone
   body('clientPhone')
-    .isString()
-    .withMessage("El número de teléfono debe ser una cadena de texto.")
     .notEmpty()
     .withMessage("El número de teléfono es requerido.")
+    .isString()
+    .withMessage("El número de teléfono debe ser una cadena de numeros.")
     .matches(/^[0-9\s+()-]+$/)
     .withMessage("El número de teléfono contiene caracteres inválidos.")
     .isLength({ min: 10, max: 11 })
@@ -48,17 +48,17 @@ const validateFieldsInsertAppintments = [
 
   // ✅ hour
   body('hour')
-    .isString()
-    .withMessage("La hora debe ser una cadena de texto.")
     .notEmpty()
-    .withMessage("La hora es requerida."),
+    .withMessage("La hora es requerida.")
+    .isString()
+    .withMessage("La hora debe ser una cadena de texto."),
 
   // ✅ methodPayment
   body('methodPayment')
-    .isString()
-    .withMessage("El método de pago debe ser una cadena de texto.")
     .notEmpty()
     .withMessage("El método de pago es requerido.")
+    .isString()
+    .withMessage("El método de pago debe ser una cadena de texto.")
     .isIn(['efectivo', 'tarjeta', 'transferencia'])
     .withMessage("El método de pago no es válido."),
 ];
