@@ -2,13 +2,22 @@ import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import { BusinessModel, UsersModel } from "../../database/models/index.model";
 import mongoose from "mongoose";
+import { supabase } from "../../helpers/supabase";
 
 export const CreateBusinessController = async (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return next({ inputError: errors.array()[0] });
 
+  // @ts-ignore — Multer agrega los campos dinámicamente
+  const favicon = req.files?.favicon?.[0] as Express.Multer.File | undefined;
+  const userId = req.userId;
+
+  const parsed = {
+    ...req.body,
+    owner: userId
+  };
+
   try {
-    const userId = req.userId;
 
     // Evitar múltiples negocios por usuario
     const existing = await BusinessModel.findOne({ owner: userId });
@@ -20,6 +29,31 @@ export const CreateBusinessController = async (req: Request, res: Response, next
       });
     }
 
+    if (favicon) {
+      const fileName = `favicon/BID${req.businessId}-UID${req.userId}-${favicon.originalname}`;
+
+      const { error } = await supabase.storage
+        .from(req.body.category)
+        .upload(fileName, favicon.buffer, {
+          contentType: favicon.mimetype,
+          upsert: true,
+        });
+
+      if (error) {
+        return res.status(500).json({
+          success: false,
+          message: "Error al subir la imagen a Supabase.",
+          error: error.message,
+        });
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from(req.body.category)
+        .getPublicUrl(fileName);
+
+      parsed.favicon = publicUrlData.publicUrl;
+    }
+
     // Normalización final
     req.body.openDays = req.body.openDays.map((d: string) => d.trim().toLowerCase());
 
@@ -27,14 +61,11 @@ export const CreateBusinessController = async (req: Request, res: Response, next
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    const business = await BusinessModel.create(
-      [{ ...req.body, owner: userId }],
-      { session }
-    );
+    const [business] = await BusinessModel.create([parsed], { session });
 
     await UsersModel.findByIdAndUpdate(
       userId,
-      { business: business[0]._id },
+      { business: business._id },
       { session }
     );
 
@@ -43,7 +74,7 @@ export const CreateBusinessController = async (req: Request, res: Response, next
 
     return res.status(201).json({
       message: "Negocio creado correctamente.",
-      business: business[0],
+      business: business,
       success: true,
       error: false,
     });
