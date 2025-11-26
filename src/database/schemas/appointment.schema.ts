@@ -39,7 +39,7 @@ export const AppointmentsSchema: SchemaDefinition = {
     enum: ["pending", "confirmed", "in_service", "completed", "cancel_by_client", "cancel_by_business", "no_show", "paid", "refunded"],
     default: "pending"
   },
-  payments: [{ type: mongoose.Schema.Types.ObjectId, ref: "payments" }],
+  payments: [{ type: mongoose.Schema.Types.ObjectId, ref: "payments", required: false }],
   business: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "business",
