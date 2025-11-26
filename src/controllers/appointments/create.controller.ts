@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
-import { AppointmentsModel, EmployeesModel, SessionsModel } from "../../database/models/index.model";
+import { AppointmentsModel, EmployeesModel, PaymentsModel, SessionsModel } from "../../database/models/index.model";
 
 export const createAppointmentController = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -36,6 +36,18 @@ export const createAppointmentController = async (req: Request, res: Response, n
       [{ sessionId, clientName, clientPhone }],
       { session: sessionTransaction }
     )
+
+    await PaymentsModel.create([{
+      business: req.businessId,
+      appointment: appointment._id,
+      employee: employeeId,
+      amount: 0,
+      method: methodPayment,
+      status: "unpaid",
+      tip: 0,
+      discount: 0,
+      subtotal: 0
+    }], { session: sessionTransaction })
 
     await sessionTransaction.commitTransaction()
 
