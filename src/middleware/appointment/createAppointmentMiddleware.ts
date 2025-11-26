@@ -63,13 +63,13 @@ const validateFieldsInsertAppintments = [
     .withMessage("El método de pago no es válido."),
 
   // ✅ status payment
-  body('status')
-    .notEmpty()
-    .withMessage("El estado del pago es requerido.")
-    .isString()
-    .withMessage("El estado del pago debe ser una cadena de texto.")
-    .isIn(["pending", "confirmed", "in_service", "completed", "cancel_by_client", "cancel_by_business", "no_show", "paid", "refunded"])
-    .withMessage("El estado del pago no es válido."),
+  // body('status')
+  //   .notEmpty()
+  //   .withMessage("El estado del pago es requerido.")
+  //   .isString()
+  //   .withMessage("El estado del pago debe ser una cadena de texto.")
+  //   .isIn(["pending", "confirmed", "in_service", "completed", "cancel_by_client", "cancel_by_business", "no_show", "paid", "refunded"])
+  //   .withMessage("El estado del pago no es válido."),
 ];
 
 export default validateFieldsInsertAppintments;
