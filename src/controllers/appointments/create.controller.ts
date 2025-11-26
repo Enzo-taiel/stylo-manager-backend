@@ -37,7 +37,7 @@ export const createAppointmentController = async (req: Request, res: Response, n
       { session: sessionTransaction }
     )
 
-    await PaymentsModel.create([{
+    const payment = await PaymentsModel.create([{
       business: req.businessId,
       appointment: appointment._id,
       employee: employeeId,
@@ -48,6 +48,9 @@ export const createAppointmentController = async (req: Request, res: Response, n
       discount: 0,
       subtotal: 0
     }], { session: sessionTransaction })
+
+    appointment.payment = payment[0]._id
+    await appointment.save({ session: sessionTransaction })
 
     await sessionTransaction.commitTransaction()
 
