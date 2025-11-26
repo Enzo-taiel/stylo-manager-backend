@@ -7,6 +7,7 @@ import { Contact_Schema } from "./contact.model";
 import { Sessions_Schema } from "./sessions.model";
 import { Services_Schema } from "./services.model";
 import { Employees_Schema } from "./employees.model";
+import { Payment_Schema } from "./payments.model";
 import { Appointments_Schema } from "./appointments.model";
 import { TempAppointments_Schema } from "./temp.appointment.model";
 
@@ -14,6 +15,7 @@ export const UsersModel = mongoose.model("users", Users_Schema)
 export const SalesModel = mongoose.model("sales", Sales_Schema)
 export const ClientsModel = mongoose.model("clients", Clients_Schema)
 export const ContactModel = mongoose.model("contacts", Contact_Schema)
+export const PaymentsModel = mongoose.model("payments", Payment_Schema)
 export const BusinessModel = mongoose.model("business", Business_Schema)
 export const SessionsModel = mongoose.model("sessions", Sessions_Schema)
 export const ServicesModel = mongoose.model("services", Services_Schema)
