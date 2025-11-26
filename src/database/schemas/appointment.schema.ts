@@ -26,13 +26,20 @@ export const AppointmentsSchema: SchemaDefinition = {
   },
   paymentStatus: {
     type: String,
-    required: false,
-    default: "pending"
+    enum: ["unpaid", "paid_card", "paid_mp", "paid_cash", "paid_transfer", "pending_online"],
+    default: "unpaid"
   },
   methodPayment: {
     type: String,
-    required: true
+    enum: ["cash", "credit_card", "debit_card", "mercadopago", "transfer"],
+    required: true,
   },
+  status: {
+    type: String,
+    enum: ["pending", "confirmed", "in_service", "completed", "cancel_by_client", "cancel_by_business", "no_show", "paid", "refunded"],
+    default: "pending"
+  },
+  payments: [{ type: mongoose.Schema.Types.ObjectId, ref: "payments" }],
   business: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "business",
@@ -40,7 +47,7 @@ export const AppointmentsSchema: SchemaDefinition = {
   },
   paymentId: {
     type: String,
-    required: false
+    required: true
   },
   sessionId: {
     type: String,
