@@ -1,5 +1,0 @@
-export { SigninController } from "./signin.controller"
-export { SignupController } from "./signup.controller"
-export { ObtainMeController } from "./obtain.controller"
-export { logoutController } from "./logout.controller"
-export { RefreshTokenController } from "./refresh.controller"
