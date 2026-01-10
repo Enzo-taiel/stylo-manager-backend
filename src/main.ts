@@ -1,17 +1,19 @@
 import Helmet from 'helmet';
-import Cors from './middleware/cors';
 import compression from 'compression';
 import cookieParser from "cookie-parser";
-import Morgan from './middleware/morgan';
-import { PORT } from './config/variables';
-import { connectDB } from './database/connect';
-import routerClients from './routes/clients.routes';
-import Express, { Application, json, urlencoded } from 'express';
-import { sessionMiddleware } from './middleware/session';
 import { createServer, Server as HttpServer } from "http";
-import initializeSocket from './database/sockets/connect';
-import { routerAuth, routerEmployees, routerServices, routerContacts, routerAppointments, routerSales, routerExpoWebHooks, routerNotifications, routerBussines } from './routes';
-import { errorMiddleware } from './middleware/employees/error';
+import Express, { Application, json, urlencoded } from 'express';
+
+
+import { ENV } from './shared/config/env';
+import { connectDB } from './shared/database/mongoose';
+import initializeSocket from './shared/database/socket';
+
+import { registerRoutes } from './routes';
+import corsConfig from './shared/middleware/cors';
+import morganConfig from './shared/middleware/morgan';
+import { errorMiddleware } from './shared/middleware/errors';
+import { sessionMiddleware } from './shared/middleware/session';
 
 export class Server {
   private PORT: number;
@@ -19,33 +21,28 @@ export class Server {
   private httpServer: HttpServer;
 
   constructor() {
-    this.PORT = PORT;
+    this.PORT = ENV.PORT;
     this.APP = Express();
     this.httpServer = createServer(this.APP);
   }
 
   private middleware() {
-    this.APP.use(Cors);
-    this.APP.use(Morgan);
+    this.APP.use(corsConfig);
+    this.APP.use(morganConfig);
     this.APP.use(json());
-    this.APP.use(urlencoded({ extended: true }))
+    this.APP.use(urlencoded({ extended: true }));
     this.APP.use(Helmet());
     this.APP.use(compression());
-    this.APP.use(cookieParser())
-    this.APP.use(sessionMiddleware);
+    this.APP.use(cookieParser());
   }
 
   private routes() {
-    this.APP.use("/api/v1/auth", routerAuth);
-    this.APP.use("/api/v1/sale", routerSales);
-    this.APP.use("/api/v1/client", routerClients);
-    this.APP.use("/api/v1/contact", routerContacts);
-    this.APP.use("/api/v1/service", routerServices);
-    this.APP.use("/api/v1/business", routerBussines);
-    this.APP.use("/api/v1/employee", routerEmployees);
-    this.APP.use("/api/v1/webhook", routerExpoWebHooks);
-    this.APP.use("/api/v1/appointment", routerAppointments);
-    this.APP.use("/api/v1/notification", routerNotifications);
+    registerRoutes(this.APP)
+    // this.APP.use("/api/v1/client", routerClients);
+    // this.APP.use("/api/v1/contact", routerContacts);
+    // this.APP.use("/api/v1/webhook", routerExpoWebHooks);
+    // this.APP.use("/api/v1/appointment", routerAppointments);
+    // this.APP.use("/api/v1/notification", routerNotifications);
     this.APP.use(errorMiddleware)
   }
 
@@ -56,7 +53,7 @@ export class Server {
 
     initializeSocket(this.httpServer);
     this.httpServer.listen(this.PORT, () => {
-      console.log(`Servidor escuchando en el puerto ${this.PORT}.`)
+      console.log(`Servidor escuchando en el puerto ${this.PORT}.`);
       console.log(`El servidor se encuentra en: ${process.env.NODE_ENV!}.`);
     });
   }

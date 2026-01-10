@@ -1,37 +1,29 @@
 import { Server } from "socket.io";
-import { formatDate } from "../../helpers/formatDate";
-import { AppointmentsModel } from "../../database/models/index.model";
-import { sendPushNotification } from "../../services/expo/expoService";
-import { SendWhatsappSavedAppointmentSuccessfully } from "../../functions/sendWhatsapp";
+import { formatDate } from "@/shared/utils/formatDate";
+import { expoService } from "@/shared/infrastructure/external/expo.service";
+import { BusinessRepository } from "@/core/business/infrastructure/business.repository";
+import { AppointmentRepository } from "@/core/appointment/infrastructure/appointment.repository";
 
 export const handleInsertDocument = async (data: any, io: Server) => {
   const document = data.fullDocument;
 
-  const appointment = await AppointmentsModel.findById(document._id)
-    .populate({ path: "client", select: "phone name subscription" })
-    .populate({ path: "employee", select: "name avatar_url expoPushToken" })
-    .populate({ path: "service", select: "title price" })
-    .populate({ path: "business", populate: { path: "owner", select: "expo_push_token" } });
+  const appointmentEntity = await AppointmentRepository.findById(document._id)
+  if (!appointmentEntity) return
 
-  if (!appointment) return;
+  const businessEntity = await BusinessRepository.findById(appointmentEntity.id!)
+  const ownerEntity = await businessEntity!.getOwner()
+  const employeeEntity = await appointmentEntity.getEmployee();
 
-  // await SendWhatsappSavedAppointmentSuccessfully({
-  //   phone: "54" + (appointment.client?.phone ?? appointment.clientPhone),
-  //   clientName: appointment.client?.name?.split(" ")[0] ?? appointment.clientName,
-  //   employeeName: appointment.employee.name.split(" ")[0],
-  //   appointmentDate: appointment.date,
-  //   appointmentHour: appointment.hour,
-  // });
+  const owner = ownerEntity!.toPrimitives()
+  const appointment = appointmentEntity.toPrimitives()
+  const employee = employeeEntity!.toPrimitives()
 
-  io.emit("appointment:created", appointment);
-
-  const expoPushToken = appointment.business.owner.expo_push_token
-
-  if (expoPushToken) {
-    await sendPushNotification(
-      expoPushToken,
+  if (owner.expoPushToken) {
+    await expoService.sendPushNotification(
+      owner.expoPushToken,
       `Nueva reservación para ${appointment.clientName}!`,
-      `${appointment.clientName} acaba de reservar una cita con ${appointment.employee.name} a las ${appointment.hour} del día ${formatDate(appointment.date)}`
-    );
+      `${appointment.clientName} acaba de reservar una cita con ${employee.name} a las ${appointment.hour} del día ${formatDate(appointment.date)}`
+    )
   }
+  return
 };

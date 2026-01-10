@@ -8,7 +8,7 @@ declare module 'express-serve-static-core' {
     user: IUser | null;
     sessionId: string
     token: string
-    userId: Types.ObjectId | null
-    businessId?: Types.ObjectId
+    userId?: string | null
+    businessId?: string
   }
 }

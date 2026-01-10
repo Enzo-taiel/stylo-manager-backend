@@ -2,15 +2,15 @@
 import WebPush from "web-push";
 import { config } from "dotenv";
 import { Server } from "./main";
-import { WEB_PUSH } from "./config/variables";
+import { ENV } from "@/shared/config/env";
 
 config();
 
 // Configuración de WebPush
 WebPush.setVapidDetails(
-  `mailto:${WEB_PUSH.VAPID_EMAIL}`,
-  WEB_PUSH.VAPID_PUBLIC_KEY,
-  WEB_PUSH.VAPID_PRIVATE_KEY
+  `mailto:${ENV.WEB_PUSH.EMAIL}`,
+  ENV.WEB_PUSH.PUBLIC_KEY,
+  ENV.WEB_PUSH.PRIVATE_KEY
 );
 
 // Iniciar el servidor
